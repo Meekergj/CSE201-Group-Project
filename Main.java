@@ -8,7 +8,7 @@
 public class Main {
   public static void main(String[] args) {
     guide();
-  }
+  } // end main
 
   public static void guide() {
     System.out.println(
@@ -18,5 +18,5 @@ public class Main {
     System.out.println(
         "that will result in the most profit possible. Each decision may have pros and");
     System.out.println("cons, so choose wisely!");
-  }
-} // end main
+  } // end guide
+} // end Main
