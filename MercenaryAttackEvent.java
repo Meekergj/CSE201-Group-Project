@@ -7,5 +7,26 @@
  */
 
 public class MercenaryAttackEvent extends Scenario {
-    
+    // Methods
+    /*
+     * The player distracts the mercs and saves their employees
+     */
+    public void saveEmployees() {
+
+    }
+
+    /*
+     * The player talks back to the mercs and loses it all
+     */
+    public void talkBack() {
+
+    }
+
+    /*
+     * Textual description of this event
+     */
+    @Override
+    public void description() {
+        super.description();
+    }
 }
