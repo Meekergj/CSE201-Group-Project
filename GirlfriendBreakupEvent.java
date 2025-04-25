@@ -7,5 +7,5 @@
  */
 
 public class GirlfriendBreakupEvent extends Scenario {
-    
+     
 }
