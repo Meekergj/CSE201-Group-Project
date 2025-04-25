@@ -7,26 +7,5 @@
  */
 
 public class GirlfriendBreakupEvent extends Scenario {
-    // Methods
-    /*
-     * The player crashes out on their employees, ruining moral
-     */
-    public void crashOut() {
-
-    }
-
-    /*
-     * The player impulse buys a boat to ease the pain
-     */
-    public void impulseBuy() {
-
-    }
-
-    /*
-     * Textual description of the event
-     */
-    @Override
-    public void description() {
-        super.description();
-    }
+     
 }
