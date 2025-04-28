@@ -1,5 +1,14 @@
 import java.util.Scanner;
 
+/**
+ * Class: GameFunctions
+ * @author: Andrew Finkelmeier
+ * @version: 1.0
+ * Course: CSE 201 Spring 2025
+ * Written: 4/4/2025
+ * 
+ * Purpose: Runs functions that set up the game and give opening information about how it works. Does not include mechanics. 
+ */
 public class GameFunctions {
     private String playerName;
 
@@ -7,6 +16,9 @@ public class GameFunctions {
         this.playerName = "Player";
     }
 
+    /**
+     * Gives the player an introduction to the game setting.
+     */
     public void gameIntro() {
         System.out.println("Initializing game...");
         System.out.println("The Wolf of Wool Street");
@@ -27,10 +39,11 @@ public class GameFunctions {
         System.out.println("-------------------------------------------" + "\n");
         
         startGame();
-
-
     }
 
+    /**
+     * Sets the player's name when prompted.
+     */
     public void setPlayerName() {
         Scanner playerScanner = new Scanner(System.in);
 
@@ -40,15 +53,19 @@ public class GameFunctions {
         System.out.println("Great. Let's get you to the top " + playerName + "!");
     }
 
+    /**
+     * Asks the player if they are ready to begin and calls the gameCommence method if yes.
+     * If no, the game starts anyways because that's just Wool Street for you.
+     */
     public void startGame() {
         System.out.println("Ready to begin? (yes/no)");
 
         Scanner scanner = new Scanner(System.in);
         String response = scanner.nextLine().toLowerCase();
 
-        if (response.equals("yes")) {
+        if(response.equals("yes")) {
             gameCommence();
-        } else if (response.equals("no")) {
+        } else if(response.equals("no")) {
             System.out.println("Who put you in charge? Wool Street doesn't wait for nobahhdy!");
             gameCommence();
         } else {
@@ -57,6 +74,9 @@ public class GameFunctions {
         }
     }
 
+    /**
+     * Calls methods that actually run the functionality of the game.
+     */
     public void gameCommence() {
         System.out.println("-------------------------------------------" + "\n");
     }
