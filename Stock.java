@@ -34,8 +34,18 @@ public class Stock {
     }
 
     // Methods
+    /*
+     * 
+     */
     public double calculateChangeInValue(double initialValue, double currentValue) {
         return (currentValue - initialValue) / initialValue;
+    }
+
+    /*
+     * 
+     */
+    public void changeValue(double change) {
+        this.value = value + change;
     }
 
     // Getters and Setters

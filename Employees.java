@@ -23,8 +23,25 @@ public class Employees {
     }
 
     // Methods
+    /*
+     * 
+     */
     public double valueOut() {
         return productivity + moral;
+    }
+
+    /*
+     * 
+     */
+    public void changeProductivity(double change) {
+        this.productivity = productivity + change;
+    }
+
+    /*
+     * 
+     */
+    public void changeMoral(double change) {
+        this.moral = moral + change;
     }
 
     // Getters and setters
