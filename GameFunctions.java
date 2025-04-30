@@ -11,6 +11,7 @@ import java.util.Scanner;
  */
 public class GameFunctions {
     private String playerName;
+    private static int currentQuarter = 1;
 
     public GameFunctions() {
         this.playerName = "Player";
@@ -81,12 +82,45 @@ public class GameFunctions {
         System.out.println("-------------------------------------------" + "\n");
     }
 
+    public int getCurrentQuarter() {
+        return currentQuarter;
+    }
+
+    public void incrementQuarter() {
+        currentQuarter++;
+    }
+
+    public static boolean isGameOver() {
+        return currentQuarter > 4 || Account.getBalance() <= 0;
+    }
+
     public static void main(String[] args) {
         GameFunctions newGame = new GameFunctions();
     
         newGame.gameIntro();
+
+        while(isGameOver() != true) {
+            if(currentQuarter == 1) {
+                ScenarioOne scenarioOne = new ScenarioOne();
+                scenarioOne.scenarioOneStart();
+            } else if(currentQuarter == 2) {
+                ScenarioTwo scenarioTwo = new ScenarioTwo();
+                scenarioTwo.scenarioTwoStart();
+            } else if(currentQuarter == 3) {
+                ScenarioThree scenarioThree = new ScenarioThree();
+                scenarioThree.scenarioThreeStart(); 
+            } else if(currentQuarter == 4) {
+                ScenarioFour scenarioFour = new ScenarioFour();
+                scenarioFour.scenarioFourStart();
+            }
+        }
+
+        if(Account.getBalance() <= 0) {
+            System.out.println("You went bankrupt! Guess you were a sheep in wolf's clothing instead!");
+        } else {
+            System.out.println("Congratulations " + newGame.playerName + "! You made it to the top of Wool Street with " + Account.getBalance());
+        }
     }
-    
 }
 
 
