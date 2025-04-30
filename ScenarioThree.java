@@ -36,7 +36,7 @@ public class ScenarioThree {
     String choice = scan.nextLine();
 
     while (choice != "1" || choice != "2") {
-      if (choice == "1") { // insurance and shit
+      if (choice == "1") {
         System.out.println("You pay the mother enough money to cover the");
         System.out.println("damages and keep quiet. (-$2000)");
 
@@ -52,27 +52,19 @@ public class ScenarioThree {
   }
 
   public void bullishTrend() {
-    System.out.println("You accidentally pulled out in front of a single");
-    System.out.println("mother's minivan and caused an impact. It caused you");
-    System.out.println("some injury. Type 1 to get out of your car and deal");
-    System.out.println("with the consequences or type 2 to drive away and");
-    System.out.println("act like nothing happened");
+    System.out.println("A stock in your portfolio becomes is now super trendy");
+    System.out.println("now. Type 1 to sell off some of your stake or type 2");
+    System.out.println("to buy even more!");
 
     System.out.print("> ");
     String choice = scan.nextLine();
 
     while (choice != "1" || choice != "2") {
-      if (choice == "1") { // insurance and shit
-        System.out.println("You pay the mother enough money to cover the");
-        System.out.println("damages and keep quiet. (-$2000)");
+      if (choice == "1") {
 
-        Account.withdrawMoney(2000);
+        Account.desposit(2000);
       } else if (choice == "2") {
-        Systen.out.println("There was a witness at the scene and word got");
-        Systen.out.println("around to your employees.");
-        for (Employee e : employees) {
-          e.decreaseMorale(4);
-        }
+        Account.withdrawMoney(2000);
       }
     }
   }
