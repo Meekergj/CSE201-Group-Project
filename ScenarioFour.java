@@ -22,7 +22,7 @@ public class ScenarioFour {
         String choice = scan.nextLine();
 
         if(choice.equals("1")) {
-            for(Employee e : employees) {
+            for(Employees e : employees) {
                 e.decreaseMorale(4);
             }
         }
@@ -45,7 +45,7 @@ public class ScenarioFour {
         String choice = scan.nextLine();
 
         if(choice.equals("1")) {
-            for(Employee e : employees) {
+            for(Employees e : employees) {
                 e.fireEmployee();
             }
 
@@ -71,7 +71,7 @@ public class ScenarioFour {
         String choice = scan.nextLine();
 
         if(choice.equals("1")) {
-            for(Employee e : employees) {
+            for(Employees e : employees) {
                 e.increaseMorale(2.5);
             }
 

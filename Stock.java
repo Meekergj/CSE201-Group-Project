@@ -1,3 +1,12 @@
+/**
+ * Class: Stock
+ * @author: Gavin Meeker
+ * @version: 1.0
+ * Course: CSE 201 Spring 2025
+ * Written: 4/24/2025
+ * 
+ * Purpose: To create Stock objects that represent individual stocks in the stock market.
+ */
 public class Stock {
     // Define attributes
     private String name;
@@ -25,8 +34,18 @@ public class Stock {
     }
 
     // Methods
+    /*
+     * 
+     */
     public double calculateChangeInValue(double initialValue, double currentValue) {
         return (currentValue - initialValue) / initialValue;
+    }
+
+    /*
+     * 
+     */
+    public void changeValue(double change) {
+        this.value = value + change;
     }
 
     // Getters and Setters
