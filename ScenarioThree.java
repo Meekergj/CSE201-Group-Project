@@ -1,4 +1,7 @@
 public class ScenarioThree {
+  public void start() {
+    int number = (int) (Math.random() * 3) + 1; // Generates 1, 2, or 3
+  }
 
   public void batemanEvent() {
     // i could prolly make this one print statement but ill figure that out later
