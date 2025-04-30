@@ -1,3 +1,6 @@
+import java.util.Scanner;
+import java.util.function.Consumer;
+
 /**
  * Class: Scenario
  *
@@ -9,40 +12,39 @@
 
 public class Scenario {
     // Define attributes
-    private boolean active;
-    private String name;
-    private int quarterOccurance;
+    private String description;
+    private String option1;
+    private String option2;
+    private Consumer<GameState> action1;
+    private Consumer<GameState> action2;
 
+
+
+    // Constructor
+    public Scenario(String description, String option1, String option2,
+                    Consumer<GameState> action1, Consumer<GameState> action2) {
+        this.description = description;
+        this.option1 = option1;
+        this.option2 = option2;
+        this.action1 = action1;
+        this.action2 = action2;
+    }
     // Methods
     /*
      * Each child class will override this method to have unique text discriptions
      */
-    public void description() {
+    public void displayScenario(GameState state) {
+        System.out.println(description);
+        System.out.println("1. " + option1);
+        System.out.println("2. " + option2);
+
+        Scanner scanner = new Scanner(System.in);
+        int choice = scanner.nextInt();
+
+        
 
     }
 
-    // Getters and setters
-    public boolean isActive() {
-        return active;
-    }
 
-    public String getName() {
-        return name;
-    }
 
-    public int getQuarterOccurance() {
-        return quarterOccurance;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setQuarterOccurance(int quarterOccurance) {
-        this.quarterOccurance = quarterOccurance;
-    }
 }
