@@ -1,6 +1,7 @@
 public class Account {
   private double balance;
   private double changeInBalance;
+  
 
   // constructor to start with custom starting balance (might go unused)
   public Account(double balance) {
@@ -20,17 +21,11 @@ public class Account {
     return balance;
   }
 
-  public void setChangeInMoney(double changeInBalance) {
-    this.changeInBalance = changeInBalance;
+  public void setChangeInMoney(double changeMoney) {
+    this.changeInBalance = changeMoney;
   }
 
   public double getChangeInMoney() {
     return changeInBalance;
-  }
-
-  public double changeTotal(double amount) {
-    balance += amount;
-    
-    return balance;
   }
 }

@@ -8,100 +8,78 @@
  * Purpose: To create Stock objects that represent individual stocks in the stock market.
  */
 public class Stock {
-    // Define attributes
-    private String name;
+    private String companyName;
     private double value;
     private double changeInValue;
-    private double amountInvested;
+    private double sharesOwned;
 
-    // Constructors
-    /*
-     * 
-     */
-    public Stock(String name, double value) {
-        this.name = name;
-        this.value = value;
+    public Stock(String companyName, double initialValue) {
+        this.companyName = companyName;
+        this.value = initialValue;
+        this.sharesOwned = 0;
     }
 
-    /*
-     * 
-     */
-    public Stock(String name, double value, double changeInValue, double amountInvested) {
-        this.name = name;
-        this.value = value;
+    public Stock(String companyName, double initialValue, double changeInValue, double sharesOwned) {
+        this.companyName = companyName;
+        this.value = initialValue;
+        this.sharesOwned = sharesOwned;
         this.changeInValue = changeInValue;
-        this.amountInvested = amountInvested;
     }
 
-    // Methods
-    /*
-     * 
-     */
-    public double calculateChangeInValue(double initialValue, double currentValue) {
-        return (currentValue - initialValue) / initialValue;
+    public String getCompanyName() {
+        return companyName;
     }
 
-    /*
-     * 
-     */
-    public void changeValue(double change) {
-        this.value = value + change;
-    }
-
-    // Getters and Setters
-    /*
-     * 
-     */
-    public String getName() {
-        return name;
-    }
-
-    /*
-     * 
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /*
-     * 
-     */
     public double getValue() {
         return value;
-    }
+    }   
 
-    /*
-     * 
-     */
-    public void setValue(double value) {
-        this.value = value;
-    }
-
-    /*
-     * 
-     */
     public double getChangeInValue() {
         return changeInValue;
     }
 
-    /*
-     * 
-     */
-    public void setChangeInValue(double changeInValue) {
-        this.changeInValue = changeInValue;
+    public double getSharesOwned() {
+        return sharesOwned;
     }
 
-    /*
-     * 
-     */
-    public double getAmountInvested() {
-        return amountInvested;
+    public void setValue(double value) {
+        this.value = value;
     }
 
-    /*
-     * 
-     */
-    public void setAmountInvested(double amountInvested) {
-        this.amountInvested = amountInvested;
-    }    
+    public void setSharesOwned(double sharesOwned) {
+        this.sharesOwned = sharesOwned;
+    }
+
+    // Derived value
+    public double calculateAmountInvested() {
+        return sharesOwned * value;
+    }
+
+    public double calculateChangeInValue(double initialValue, double currentValue) {
+        return (currentValue - initialValue) / initialValue;
+    }
+
+    public void displayStock() {
+        System.out.printf("%s - Value: $%.2f | Shares: %.2f | Invested: $%.2f | Δ: %.2f%%\n",
+                companyName, value, sharesOwned, calculateAmountInvested(), changeInValue * 100);
+    }
+
+    public double buyShares(double numShares) {
+        double cost = numShares * value;
+        sharesOwned += numShares;
+        return cost;
+    }
+
+    // Sell shares: returns the total revenue or -1 if not enough shares
+    public double sellShares(double numShares) {
+        if (numShares > sharesOwned) {
+            System.out.println("Not enough shares to sell.");
+            return -1;
+        }
+        double revenue = numShares * value;
+        sharesOwned -= numShares;
+        return revenue;
+    }
+
+
 }
