@@ -23,7 +23,9 @@ public class Employees {
     }
 
     // Methods
-
+    public double valueOut() {
+        return productivity + moral;
+    }
 
     // Getters and setters
     /*
@@ -44,7 +46,7 @@ public class Employees {
      * 
      */
     public double getProductivity() {
-        return productivity + moral;
+        return productivity;
     }
 
     /*
