@@ -41,7 +41,14 @@ public class Scenario {
         Scanner scanner = new Scanner(System.in);
         int choice = scanner.nextInt();
 
-        
+        if (choice == 1) {
+            action1.accept(state);
+        } else if (choice == 2) {
+            action2.accept(state);
+        } else {
+            System.out.println("Invalid choice. Please try again.");
+            displayScenario(state); // Re-display scenario if invalid choice
+        }
 
     }
 
