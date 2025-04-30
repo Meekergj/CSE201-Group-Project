@@ -27,4 +27,10 @@ public class Account {
   public double getChangeInMoney() {
     return changeInBalance;
   }
+
+  public double changeTotal(double amount) {
+    balance += amount;
+    
+    return balance;
+  }
 }
