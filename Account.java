@@ -20,8 +20,8 @@ public class Account {
     return balance;
   }
 
-  public void setChangeInMoney(double changeMoney) {
-    changeInBalance = changeMoney;
+  public void setChangeInMoney(double changeInBalance) {
+    this.changeInBalance = changeInBalance;
   }
 
   public double getChangeInMoney() {
