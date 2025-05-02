@@ -30,7 +30,6 @@ public class ScenarioTwo {
 
         // Add dialogue or logic for the chosen scenario here, or starting the next
         // room or quarter in the game.
-
     }
 
     public void optionOneStart() {
@@ -43,15 +42,11 @@ public class ScenarioTwo {
         String choice = in.nextLine();
         
         if(choice.equals("1")) {
-            for(Employees e : employees) {
-                e.increaseMorale(3);
-            }
+            e.changeMorale(3);
             System.out.println("Your employees are motivated by the challenge!");
         }
         else if(choice.equals("2")) {
-            for(Employees e : employees) {
-                e.decreaseMorale(2);
-            }
+            e.changeMorale(-2);
             System.out.println("Your employees feel demotivated by the lack of action.");
         }
         else {
@@ -61,75 +56,13 @@ public class ScenarioTwo {
     }
 
     public void optionTwo() {
-        System.out.println("Welcome! Would you prefer a safe investment or a risky investment?" + "Type 1 for safe, or 2 for risky.");
+        System.out.println("");
         String playersChoice = in.next();
-        int playersChoiceInt = -1;
-
-        while (playersChoiceInt != 1 && playersChoiceInt != 2) {
-            try {
-                playersChoiceInt = Integer.parseInt(playersChoice);
-            } catch (NumberFormatException e) {
-                // Player did not enter a number.
-                System.out.println("Try Again. Please enter a number.");
-            }
-            switch (playersChoiceInt) {
-                case 1 -> {
-                    System.out.println("You chose a safe investment. Good luck!");
-                    // Logic for safe investment scenario can be added here
-                }
-                case 2 -> {
-                    System.out.println("You chose a risky investment. Brace yourself!");
-                    // Logic for risky investment scenario can be added here
-                }
-                default -> {
-                    System.out.println("Input not recognized. Please type 1 for safe " + "investment, or 2 for a risky investment.");
-                    optionTwo();
-                }
-            }
-            System.out.println("Input not recognized. Please type 1 for safe " + "investment, or 2 for a risky investment.");
-            playersChoice = in.next();
-            try {
-                playersChoiceInt = Integer.parseInt(playersChoice);
-            } catch (NumberFormatException e) {
-                System.out.println("Please enter a number.");
-            }
-        }
     } 
 
     public void optionThree() {
-        System.out.println("Welcome! Would you prefer a safe investment or a risky investment?" + "Type 1 for safe, or 2 for risky.");
+        System.out.println("");
         String playersChoice = in.next();
-        int playersChoiceInt = -1;
-
-        while (playersChoiceInt != 1 && playersChoiceInt != 2) {
-            try {
-                playersChoiceInt = Integer.parseInt(playersChoice);
-            } catch (NumberFormatException e) {
-                // Player did not enter a number.
-                System.out.println("Try Again. Please enter a number.");
-            }
-            switch (playersChoiceInt) {
-                case 1 -> {
-                    System.out.println("You chose a safe investment. Good luck!");
-                    // Logic for safe investment scenario can be added here
-                }
-                case 2 -> {
-                    System.out.println("You chose a risky investment. Brace yourself!");
-                    // Logic for risky investment scenario can be added here
-                }
-                default -> {
-                    System.out.println("Input not recognized. Please type 1 for safe " + "investment, or 2 for a risky investment.");
-                    playersChoice = in.next();
-                }
-            }
-            System.out.println("Input not recognized. Please type 1 for safe " + "investment, or 2 for a risky investment.");
-            playersChoice = in.next();
-            try {
-                playersChoiceInt = Integer.parseInt(playersChoice);
-            } catch (NumberFormatException e) {
-                System.out.println("Please enter a number.");
-            }
-        }
     } 
 
     // Update these
