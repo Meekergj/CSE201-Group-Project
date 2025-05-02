@@ -1,3 +1,4 @@
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -11,6 +12,32 @@ import java.util.Scanner;
  */
 public class ScenarioFour {
     Scanner scan = new Scanner(System.in);
+    Random rand = new Random();
+    int randomNumber = rand.nextInt(3) + 1;
+
+    public void startScenarioFour() {
+        switch (randomNumber) {
+            case 1 -> {
+                System.out.println("Scenario One: You have a choice to make!");
+                girlfriendBreakupStart();
+            }
+            case 2 -> {
+                System.out.println("Scenario One: A different path awaits you!");
+                marketCollapseStart();
+                // Logic for another option can be added here
+            }
+            case 3 -> {
+                System.out.println("Scenario One: A surprise event occurs!");
+                rivalMercenariesStart();
+                // Logic for a surprise event can be added here
+            }
+            default -> System.out.println("Unexpected scenario number.");
+        }
+
+        // Add dialogue or logic for the chosen scenario here, or starting the next
+        // room or quarter in the game.
+
+    }
 
     public void girlfriendBreakupStart() {
         System.out.println("Your girlfriend dumped you out of nowhere and you're pretty maaaaaddd.");

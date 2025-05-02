@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -10,12 +12,48 @@ import java.util.Scanner;
  * Purpose: Runs functions that set up the game and give opening information about how it works. Does not include mechanics. 
  */
 public class GameFunctions {
-    private String playerName;
-    private static int currentQuarter = 1;
+
+    private Account account = new Account(); // Default account with initial balance
+    private Employees employees = new Employees(); // Default employees
+    private List<Stock> portfolio = new ArrayList<>(); // Default empty portfolio
+    private int currentQuarter;
+
+    // Do we need setters for these 
+    public GameFunctions(Account account, Employees employees, List<Stock> portfolio) {
+        this.account = account;
+        this.employees = employees;
+        this.portfolio = portfolio;
+        this.currentQuarter = 1;
+    }
 
     public GameFunctions() {
-        this.playerName = "Player";
+        this.playerName = "Default Player";
+        this.currentQuarter = 0; // Initialize currentQuarter to 0
     }
+
+    public void increaseQuarter() {
+        this.currentQuarter++;
+    }   
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    public void setEmployees(Employees employees) {
+        this.employees = employees;
+    }
+
+    public void setPortfolio(List<Stock> portfolio) {
+        this.portfolio = portfolio;
+    }
+
+    public Account getAccount() { return account; }
+    public Employees getEmployees() { return employees; }
+    public List<Stock> getPortfolio() { return portfolio; }
+
+    public int getCurrentQuarter() {
+        return currentQuarter;
+    }   
 
     /**
      * Gives the player an introduction to the game setting.
@@ -36,7 +74,6 @@ public class GameFunctions {
         System.out.print("I'd rather be bahhhtty and a millionaire than working a 9-5 at Macdonald's or Shears.");
         System.out.println("Right, you forgot to mention your name...");
 
-        setPlayerName();
         System.out.println("-------------------------------------------" + "\n");
         
         startGame();
@@ -45,6 +82,8 @@ public class GameFunctions {
     /**
      * Sets the player's name when prompted.
      */
+    private String playerName;
+
     public void setPlayerName() {
         Scanner playerScanner = new Scanner(System.in);
 
@@ -52,6 +91,17 @@ public class GameFunctions {
         this.playerName = playerScanner.nextLine();
 
         System.out.println("Great. Let's get you to the top " + playerName + "!");
+        Account newAccount = new Account(1000, playerName);
+        this.setAccount(newAccount);
+    }
+
+    public void inbetweenFirstScenario() {
+        System.out.println("Before we get started, let's go over some basics.");
+        System.out.println("You start with a balance of $1000.00 and your goal is to increase your wealth by making smart investments.");
+        System.out.println("Each quarter, you'll face different scenarios that will test your investment skills.");
+        System.out.println("Make choices wisely, as they will affect your balance and the outcome of the game.");
+        System.out.println("Remember, you can go bankrupt if your balance drops to $0.00 or below.");
+        System.out.println("Good luck, " + this.getAccount().getName() + "! Let's get started!");
     }
 
     /**
@@ -65,13 +115,15 @@ public class GameFunctions {
         String response = scanner.nextLine().toLowerCase();
 
         if(response.equals("yes")) {
-            gameCommence();
+            System.out.println("Great! Let's get you started on your journey to the top of Wool Street!");
+            System.out.println("Onto our first quarter...");
+
         } else if(response.equals("no")) {
             System.out.println("Who put you in charge? Wool Street doesn't wait for nobahhdy!");
             gameCommence();
         } else {
             System.out.println("What the flock are you even saying?? I have no idea what to do with that information...");
-            startGame();
+            gameCommence();
         }
     }
 
@@ -82,44 +134,53 @@ public class GameFunctions {
         System.out.println("-------------------------------------------" + "\n");
     }
 
-    public int getCurrentQuarter() {
-        return currentQuarter;
-    }
 
-    public void incrementQuarter() {
-        currentQuarter++;
-    }
 
-    public static boolean isGameOver() {
-        return currentQuarter > 4 || Account.getBalance() <= 0;
+    public boolean isGameOver() {
+        return currentQuarter > 4 || account.getBalance() <= 0; // Check if the game is over
     }
 
     public static void main(String[] args) {
         GameFunctions newGame = new GameFunctions();
     
         newGame.gameIntro();
+        newGame.setPlayerName();
+        newGame.inbetweenFirstScenario();
+        newGame.startGame();
 
-        while(isGameOver() != true) {
-            if(currentQuarter == 1) {
-                ScenarioOne scenarioOne = new ScenarioOne();
-                scenarioOne.scenarioOneStart();
-            } else if(currentQuarter == 2) {
-                ScenarioTwo scenarioTwo = new ScenarioTwo();
-                scenarioTwo.scenarioTwoStart();
-            } else if(currentQuarter == 3) {
-                ScenarioThree scenarioThree = new ScenarioThree();
-                scenarioThree.scenarioThreeStart(); 
-            } else if(currentQuarter == 4) {
-                ScenarioFour scenarioFour = new ScenarioFour();
-                scenarioFour.scenarioFourStart();
+
+        while(newGame.isGameOver() != true) {
+            switch (newGame.getCurrentQuarter()) {
+                case 1 -> {
+                    ScenarioOne scenarioOne = new ScenarioOne();
+                    scenarioOne.startScenarioOne();
+                    newGame.increaseQuarter();
+                }
+                case 2 -> {
+                    ScenarioTwo scenarioTwo = new ScenarioTwo();
+                    scenarioTwo.startScenarioTwo();
+                    newGame.increaseQuarter();
+                }
+                case 3 -> {
+                    ScenarioThree scenarioThree = new ScenarioThree();
+                    scenarioThree.startScenarioThree();
+                    newGame.increaseQuarter();
+                }
+                case 4 -> {
+                    ScenarioFour scenarioFour = new ScenarioFour();
+                    scenarioFour.startScenarioFour();
+                    newGame.increaseQuarter();
+                }
             }
         }
 
-        if(Account.getBalance() <= 0) {
+        if(newGame.getAccount().getBalance() <= 0) {
             System.out.println("You went bankrupt! Guess you were a sheep in wolf's clothing instead!");
         } else {
-            System.out.println("Congratulations " + newGame.playerName + "! You made it to the top of Wool Street with " + Account.getBalance());
+            System.out.println("Congratulations " + newGame.getAccount().getName() + "! You made it to the top of Wool Street with " + newGame.getAccount().getBalance());
         }
+    
+
     }
 }
 
