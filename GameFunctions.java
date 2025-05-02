@@ -11,9 +11,11 @@ import java.util.Scanner;
  */
 public class GameFunctions {
     private String playerName;
+    private static int currentQuarter = 1;
+    private static Account account = new Account(); // Initialize the account object
 
     public GameFunctions() {
-        this.playerName = "Player";
+        this.playerName = "Default Player";
     }
 
     /**
@@ -64,13 +66,13 @@ public class GameFunctions {
         String response = scanner.nextLine().toLowerCase();
 
         if(response.equals("yes")) {
-            gameCommence();
+            startGame();
         } else if(response.equals("no")) {
             System.out.println("Who put you in charge? Wool Street doesn't wait for nobahhdy!");
             gameCommence();
         } else {
             System.out.println("What the flock are you even saying?? I have no idea what to do with that information...");
-            startGame();
+            gameCommence();
         }
     }
 
@@ -81,12 +83,45 @@ public class GameFunctions {
         System.out.println("-------------------------------------------" + "\n");
     }
 
+    public int getCurrentQuarter() {
+        return currentQuarter;
+    }
+
+    public void incrementQuarter() {
+        currentQuarter++;
+    }
+
+    public static boolean isGameOver() {
+        return currentQuarter > 4 || account.getBalance() <= 0; // Check if the game is over
+    }
+
     public static void main(String[] args) {
         GameFunctions newGame = new GameFunctions();
     
         newGame.gameIntro();
+
+        while(isGameOver() != true) {
+            if(currentQuarter == 1) {
+                ScenarioOne scenarioOne = new ScenarioOne();
+                scenarioOne.scenarioOneStart();
+            } else if(currentQuarter == 2) {
+                ScenarioTwo scenarioTwo = new ScenarioTwo();
+                scenarioTwo.scenarioTwoStart();
+            } else if(currentQuarter == 3) {
+                ScenarioThree scenarioThree = new ScenarioThree();
+                scenarioThree.scenarioThreeStart(); 
+            } else if(currentQuarter == 4) {
+                ScenarioFour scenarioFour = new ScenarioFour();
+                scenarioFour.scenarioFourStart();
+            }
+        }
+
+        if(Account.getBalance() <= 0) {
+            System.out.println("You went bankrupt! Guess you were a sheep in wolf's clothing instead!");
+        } else {
+            System.out.println("Congratulations " + account.getName() + "! You made it to the top of Wool Street with " + account.getBalance());
+        }
     }
-    
 }
 
 

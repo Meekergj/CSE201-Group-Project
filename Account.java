@@ -1,16 +1,22 @@
 public class Account {
   private double balance;
   private double changeInBalance;
+  private String accountHolder;
   
 
   // constructor to start with custom starting balance (might go unused)
-  public Account(double balance) {
-    this.balance = balance;
+  public Account(double defaultBalance, String accountHolder) {
+    this.balance = defaultBalance;
+    this.accountHolder = accountHolder;
   }
 
   // default constructor
   public Account() {
     balance = 1000;
+  }
+
+  public String getName() {
+    return accountHolder;
   }
 
   public void setBalance(double newBalance) {
