@@ -1,13 +1,27 @@
 
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
 public class ScenarioTwo {
     
-    // Assuming necessary imports and class variables are defined here
     private Scanner in = new Scanner(System.in);
     Random rand = new Random();
     int randomNumber = rand.nextInt(3) + 1;
+
+    private GameFunctions gameFunction;
+    private Account account;
+    private List<Stock> stockPortfolio;
+    private Employees employees;
+
+    public ScenarioTwo(GameFunctions gameFunction) {
+        this.gameFunction = gameFunction;
+        this.employees = gameFunction.getEmployees();
+        this.account = gameFunction.getAccount();
+        this.stockPortfolio = gameFunction.getPortfolio();
+    }
+    // Assuming necessary imports and class variables are defined here
+
 
     public void startScenarioTwo() {
         switch (randomNumber) {
@@ -43,15 +57,11 @@ public class ScenarioTwo {
         String choice = in.nextLine();
         
         if(choice.equals("1")) {
-            for(Employees e : employees) {
-                e.increaseMorale(3);
-            }
+            employees.changeMoral(5);
             System.out.println("Your employees are motivated by the challenge!");
         }
         else if(choice.equals("2")) {
-            for(Employees e : employees) {
-                e.decreaseMorale(2);
-            }
+            employees.changeMoral(5);
             System.out.println("Your employees feel demotivated by the lack of action.");
         }
         else {

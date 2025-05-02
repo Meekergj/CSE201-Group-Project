@@ -27,7 +27,7 @@ public class GameFunctions {
     }
 
     public GameFunctions() {
-        this.playerName = "Default Player";
+        this.account.setName("Default Player");
         this.currentQuarter = 0; // Initialize currentQuarter to 0
     }
 
@@ -45,11 +45,11 @@ public class GameFunctions {
 
     public void setPortfolio(List<Stock> portfolio) {
         this.portfolio = portfolio;
-    }
+        }
 
-    public Account getAccount() { return account; }
-    public Employees getEmployees() { return employees; }
-    public List<Stock> getPortfolio() { return portfolio; }
+        public Account getAccount() { return this.account; }
+        public Employees getEmployees() { return this.employees; }
+        public List<Stock> getPortfolio() { return this.portfolio; }
 
     public int getCurrentQuarter() {
         return currentQuarter;
@@ -76,7 +76,6 @@ public class GameFunctions {
 
         System.out.println("-------------------------------------------" + "\n");
         
-        startGame();
     }
 
     /**
@@ -148,26 +147,27 @@ public class GameFunctions {
         newGame.inbetweenFirstScenario();
         newGame.startGame();
 
+        newGame.increaseQuarter();
 
         while(newGame.isGameOver() != true) {
             switch (newGame.getCurrentQuarter()) {
                 case 1 -> {
-                    ScenarioOne scenarioOne = new ScenarioOne();
+                    ScenarioOne scenarioOne = new ScenarioOne(newGame);
                     scenarioOne.startScenarioOne();
                     newGame.increaseQuarter();
                 }
                 case 2 -> {
-                    ScenarioTwo scenarioTwo = new ScenarioTwo();
+                    ScenarioTwo scenarioTwo = new ScenarioTwo(newGame);
                     scenarioTwo.startScenarioTwo();
                     newGame.increaseQuarter();
                 }
                 case 3 -> {
-                    ScenarioThree scenarioThree = new ScenarioThree();
+                    ScenarioThree scenarioThree = new ScenarioThree(newGame);
                     scenarioThree.startScenarioThree();
                     newGame.increaseQuarter();
                 }
                 case 4 -> {
-                    ScenarioFour scenarioFour = new ScenarioFour();
+                    ScenarioFour scenarioFour = new ScenarioFour(newGame);
                     scenarioFour.startScenarioFour();
                     newGame.increaseQuarter();
                 }
