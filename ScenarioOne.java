@@ -1,39 +1,11 @@
-import java.util.Random;
 import java.util.Scanner;
 
 public class ScenarioOne {
 
-    Random rand = new Random();
-    int randomNumber = rand.nextInt(3) + 1;
-    
-
     // Takes care of starting the scenario, as there are multiple options, 3 
     // rooms there could be for each scenario.
+    
     public void startScenarioOne() {
-        switch (randomNumber) {
-            case 1 -> {
-                System.out.println("Scenario One: You have a choice to make!");
-                startOptionOneScenarioOne();
-            }
-            case 2 -> {
-                System.out.println("Scenario One: A different path awaits you!");
-                startOptionTwoScenarioOne();
-                // Logic for another option can be added here
-            }
-            case 3 -> {
-                System.out.println("Scenario One: A surprise event occurs!");
-                startOptionThreeScenarioOne();
-                // Logic for a surprise event can be added here
-            }
-            default -> System.out.println("Unexpected scenario number.");
-        }
-
-        // Add dialogue or logic for the chosen scenario here, or starting the next
-        // room or quarter in the game.
-
-    }
-
-    public void startOptionOneScenarioOne() {
         Scanner in = new Scanner(System.in);
         System.out.println("Welcome! Would you prefer a safe investment or a risky investment?" + "Type 1 for safe, or 2 for risky.");
         String playersChoice = in.next();
@@ -57,16 +29,10 @@ public class ScenarioOne {
                 }
                 default -> {
                     System.out.println("Input not recognized. Please type 1 for safe " + "investment, or 2 for a risky investment.");
-                    playersChoice = in.next();
+                    startScenarioOne();
                 }
             }
-            System.out.println("Input not recognized. Please type 1 for safe " + "investment, or 2 for a risky investment.");
-            playersChoice = in.next();
-            try {
-                playersChoiceInt = Integer.parseInt(playersChoice);
-            } catch (NumberFormatException e) {
-                System.out.println("Please enter a number.");
-            }
+
         }
     }
     // Change this to match our second option for scenario one

@@ -7,7 +7,7 @@ public class ScenarioTwo {
     
     private Scanner in = new Scanner(System.in);
     Random rand = new Random();
-    int randomNumber = rand.nextInt(3) + 1;
+    int randomNumber = rand.nextInt(4) + 1;
 
     private GameFunctions gameFunction;
     private Account account;
@@ -26,18 +26,23 @@ public class ScenarioTwo {
     public void startScenarioTwo() {
         switch (randomNumber) {
             case 1 -> {
-                System.out.println("Scenario One: You have a choice to make!");
+                System.out.println("Quarter Two: You have a choice to make!");
                 optionOneStart();
             }
             case 2 -> {
-                System.out.println("Scenario One: A different path awaits you!");
+                System.out.println("Quarter Two: A different path awaits you!");
                 optionTwo();
                 // Logic for another option can be added here
             }
             case 3 -> {
-                System.out.println("Scenario One: A surprise event occurs!");
+                System.out.println("Quarter Two: A surprise event occurs!");
                 optionThree();
                 // Logic for a surprise event can be added here
+            }
+            case 4 -> {
+                System.out.println("Quarter Two: A new opportunity arises!");
+                optionFour();
+                // Logic for a new opportunity can be added here
             }
             default -> System.out.println("Unexpected scenario number.");
         }
@@ -56,22 +61,25 @@ public class ScenarioTwo {
     public void competitorThreat() {
         String choice = in.nextLine();
         
-        if(choice.equals("1")) {
-            employees.changeMoral(5);
-            System.out.println("Your employees are motivated by the challenge!");
-        }
-        else if(choice.equals("2")) {
-            employees.changeMoral(5);
-            System.out.println("Your employees feel demotivated by the lack of action.");
-        }
-        else {
-            System.out.println("Invalid choice. Please choose again: ");
-            competitorThreat();
+        switch (choice) {
+            case "1" -> {
+                employees.changeMoral(5);
+                System.out.println("Your employees are motivated by the challenge!");
+            }
+            case "2" -> {
+                employees.changeMoral(5);
+                System.out.println("Your employees feel demotivated by the lack of action.");
+            }
+            default -> {
+                System.out.println("Invalid choice. Please choose again: ");
+                competitorThreat();
+            }
         }
     }
 
     public void optionTwo() {
-        System.out.println("Welcome! Would you prefer a safe investment or a risky investment?" + "Type 1 for safe, or 2 for risky.");
+        System.out.println("Surprise!\n You found a wallet on the ground, it had $500 in it!" + 
+                            "Type 1 to pick it up and keep the money\n or 2 to bring it to the police.\n");
         String playersChoice = in.next();
         int playersChoiceInt = -1;
 
@@ -84,30 +92,27 @@ public class ScenarioTwo {
             }
             switch (playersChoiceInt) {
                 case 1 -> {
-                    System.out.println("You chose a safe investment. Good luck!");
+                    System.out.println("Congratulations! You chose to keep the money. Your account balance has increased by $500.");
+                    gameFunction.getAccount().updateBalance(500);
                     // Logic for safe investment scenario can be added here
                 }
                 case 2 -> {
-                    System.out.println("You chose a risky investment. Brace yourself!");
+                    System.out.println("You chose to bring the wallet to the police. Your honesty is commendable, but you missed out on $500.");
+                    gameFunction.getEmployees().changeMoral(5);
                     // Logic for risky investment scenario can be added here
                 }
                 default -> {
-                    System.out.println("Input not recognized. Please type 1 for safe " + "investment, or 2 for a risky investment.");
+                    System.out.println("Input not recognized. Please type 1 or 2");
                     optionTwo();
                 }
-            }
-            System.out.println("Input not recognized. Please type 1 for safe " + "investment, or 2 for a risky investment.");
-            playersChoice = in.next();
-            try {
-                playersChoiceInt = Integer.parseInt(playersChoice);
-            } catch (NumberFormatException e) {
-                System.out.println("Please enter a number.");
             }
         }
     } 
 
     public void optionThree() {
-        System.out.println("Welcome! Would you prefer a safe investment or a risky investment?" + "Type 1 for safe, or 2 for risky.");
+        System.out.println("Your employees are asking you, their boss to go out with them " +
+                            "for a team-building event and drinks." +
+                            "Type 1 to join them or 2 to decline the invitation.\n");
         String playersChoice = in.next();
         int playersChoiceInt = -1;
 
@@ -120,27 +125,58 @@ public class ScenarioTwo {
             }
             switch (playersChoiceInt) {
                 case 1 -> {
-                    System.out.println("You chose a safe investment. Good luck!");
+                    System.out.println("You chose to join your employees for a team-building event. " +
+                            "Your employees feel appreciated and their morale increases!");
+                    gameFunction.getEmployees().changeMoral(10);
+                    gameFunction.getAccount().updateBalance(-100); // Assuming a cost for the event
                     // Logic for safe investment scenario can be added here
                 }
                 case 2 -> {
-                    System.out.println("You chose a risky investment. Brace yourself!");
+                    System.out.println("You chose to decline the invitation. " +
+                            "Your employees feel disappointed and their morale decreases.");
+                    gameFunction.getEmployees().changeMoral(-10);
+
                     // Logic for risky investment scenario can be added here
                 }
                 default -> {
                     System.out.println("Input not recognized. Please type 1 for safe " + "investment, or 2 for a risky investment.");
-                    playersChoice = in.next();
+                    optionThree();
                 }
-            }
-            System.out.println("Input not recognized. Please type 1 for safe " + "investment, or 2 for a risky investment.");
-            playersChoice = in.next();
-            try {
-                playersChoiceInt = Integer.parseInt(playersChoice);
-            } catch (NumberFormatException e) {
-                System.out.println("Please enter a number.");
             }
         }
     } 
+
+    public void optionFour() {
+        System.out.println("A homeless man is asking you for money!" +
+                            "Type 1 to give him $100 or 2 to ignore him.\n");
+        String playersChoice = in.next();
+        int playersChoiceInt = -1;
+
+        while (playersChoiceInt != 1 && playersChoiceInt != 2) {
+            try {
+                playersChoiceInt = Integer.parseInt(playersChoice);
+            } catch (NumberFormatException e) {
+                // Player did not enter a number.
+                System.out.println("Try Again. Please enter a number.");
+            }
+            switch (playersChoiceInt) {
+                case 1 -> {
+                    System.out.println("You chose to give him $100. Your account balance has decreased by $100.");
+                    gameFunction.getAccount().updateBalance(-100);
+                    // Logic for safe investment scenario can be added here
+                }
+                case 2 -> {
+                    System.out.println("You chose to ignore him. Your employee saw and thinks less of you.");
+                    gameFunction.getEmployees().changeMoral(-5);
+                    // Logic for risky investment scenario can be added here
+                }
+                default -> {
+                    System.out.println("Input not recognized. Please type 1 for safe " + "investment, or 2 for a risky investment.");
+                    optionFour();
+                }
+            }
+        }
+    }
 
     // Update these
 }
