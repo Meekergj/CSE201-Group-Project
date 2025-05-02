@@ -65,7 +65,9 @@ public class ScenarioThree {
     System.out.println("with the consequences or type 2 to drive away and");
     System.out.println("act like nothing happened");
 
-    System.out.print("> ");
+    Scanner scan = new Scanner(System.in);
+
+    System.out.print("> \n");
     String choice = scan.nextLine();
 
     while (choice != "1" || choice != "2") {
@@ -88,16 +90,19 @@ public class ScenarioThree {
     System.out.println("A stock in your portfolio becomes is now super trendy");
     System.out.println("now. Type 1 to sell off some of your stake or type 2");
     System.out.println("to buy even more!");
+    // Give them option to buy amount of stock shares
+    // Maybe display the price of the stock at the time of the transaction and total
+    Scanner scan = new Scanner(System.in);
 
-    System.out.print("> ");
+    System.out.print("> \n");
     String choice = scan.nextLine();
 
     while (choice != "1" || choice != "2") {
       if (choice == "1") {
-
-        Account.desposit(2000);
+        // Update to use shares from Stock class if 
+        Account.updateBalance(2000);
       } else if (choice == "2") {
-        Account.withdrawMoney(2000);
+        Account.updateBalance(-2000);
       }
     }
   }
