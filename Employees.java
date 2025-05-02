@@ -12,15 +12,23 @@ public class Employees {
     // Attributes
     private double moral;
     private double productivity;
+    private int employeeCount = 0; // Optional: if you want to track number of employees
 
     // Constructor
     /*
      * 
      */
-    public Employees(double moral, double productivity) {
+    public Employees(double moral, double productivity, int employeeCount) {
         this.moral = moral;
         this.productivity = productivity;
+        this.employeeCount = employeeCount;
     }
+
+    public Employees() {
+        this.moral = 0.0;
+        this.productivity = 0.0;
+        this.employeeCount = 0;
+    }  
 
     // Methods
     /*
