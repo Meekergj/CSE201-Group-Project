@@ -20,6 +20,10 @@ public class Account {
     return accountHolder;
   }
 
+  public void setName(String accountHolder) {
+    this.accountHolder = accountHolder;
+  }
+
   public void setBalance(double newBalance) {
     this.balance = newBalance;
   }

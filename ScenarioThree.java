@@ -1,16 +1,35 @@
+import java.util.Random;
+import java.util.Scanner;
+
 public class ScenarioThree {
-  public void start() {
-    int number = (int) (Math.random() * 3) + 1; // Generates 1, 2, or 3
-    if (number == 1) {
-      batemanEvent();
+
+  Random rand = new Random();
+  int randomNumber = rand.nextInt(3) + 1;
+
+  public void startScenarioThree() {
+    switch (randomNumber) {
+        case 1 -> {
+            System.out.println("Scenario 3: You have a choice to make!");
+            batemanEvent();
+          }
+        case 2 -> {
+            System.out.println("Scenario 3: A different path awaits you!");
+            carCrash();
+            // Logic for another option can be added here
+        }
+        case 3 -> {
+            System.out.println("Scenario 3: A surprise event occurs!");
+            bullishTrend();
+            // Logic for a surprise event can be added here
+        }
+        default -> System.out.println("Unexpected scenario number.");
     }
-    if (number == 2) {
-      carCrash();
-    }
-    if (number == 3) {
-      bullishTrend();
-    }
-  }
+
+    // Add dialogue or logic for the chosen scenario here, or starting the next
+    // room or quarter in the game.
+
+}
+  
 
   public void batemanEvent() {
     // i could prolly make this one print statement but ill figure that out later
@@ -19,7 +38,9 @@ public class ScenarioThree {
     System.out.println("pay to get them the best doctors OR type 2 to forget");
     System.out.println("about them and hire Bateman instead.");
 
-    System.out.print("> ");
+    Scanner scan = new Scanner(System.in);
+    
+    System.out.print("> \n");
     String choice = scan.nextLine();
 
     while (choice != "1" || choice != "2") {
