@@ -6,6 +6,7 @@ public class ScenarioOne {
     Random rand = new Random();
     int randomNumber = rand.nextInt(3) + 1;
     
+
     // Takes care of starting the scenario, as there are multiple options, 3 
     // rooms there could be for each scenario.
     public void startScenarioOne() {
