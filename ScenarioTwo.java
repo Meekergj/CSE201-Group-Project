@@ -172,7 +172,7 @@ public class ScenarioTwo {
                 }
                 default -> {
                     System.out.println("Input not recognized. Please type 1 for safe " + "investment, or 2 for a risky investment.");
-                    optionTwo();
+                    optionFour();
                 }
             }
         }
