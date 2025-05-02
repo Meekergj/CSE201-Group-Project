@@ -101,22 +101,27 @@ public class GameFunctions {
         newGame.gameIntro();
 
         while(isGameOver() != true) {
-            if(currentQuarter == 1) {
-                ScenarioOne scenarioOne = new ScenarioOne();
-                scenarioOne.scenarioOneStart();
-            } else if(currentQuarter == 2) {
-                ScenarioTwo scenarioTwo = new ScenarioTwo();
-                scenarioTwo.scenarioTwoStart();
-            } else if(currentQuarter == 3) {
-                ScenarioThree scenarioThree = new ScenarioThree();
-                scenarioThree.scenarioThreeStart(); 
-            } else if(currentQuarter == 4) {
-                ScenarioFour scenarioFour = new ScenarioFour();
-                scenarioFour.scenarioFourStart();
+            switch (currentQuarter) {
+                case 1 -> {
+                    ScenarioOne scenarioOne = new ScenarioOne();
+                    scenarioOne.startScenarioOne();
+                }
+                case 2 -> {
+                    ScenarioTwo scenarioTwo = new ScenarioTwo();
+                    scenarioTwo.startScenarioTwo();
+                }
+                case 3 -> {
+                    ScenarioThree scenarioThree = new ScenarioThree();
+                    scenarioThree.startScenarioThree();
+                }
+                case 4 -> {
+                    ScenarioFour scenarioFour = new ScenarioFour();
+                    scenarioFour.startScenarioFour();
+                }
             }
         }
 
-        if(Account.getBalance() <= 0) {
+        if(account.getBalance() <= 0) {
             System.out.println("You went bankrupt! Guess you were a sheep in wolf's clothing instead!");
         } else {
             System.out.println("Congratulations " + account.getName() + "! You made it to the top of Wool Street with " + account.getBalance());

@@ -13,6 +13,7 @@ public class Account {
   // default constructor
   public Account() {
     balance = 1000;
+    accountHolder = "Default Account Holder";
   }
 
   public String getName() {
