@@ -17,6 +17,7 @@ public class GameFunctions {
     private Employees employees = new Employees(); // Default employees
     private List<Stock> portfolio = new ArrayList<>(); // Default empty portfolio
     private int currentQuarter;
+    private boolean gameOver = false;
 
     // Do we need setters for these 
     public GameFunctions(Account account, Employees employees, List<Stock> portfolio) {
@@ -131,12 +132,15 @@ public class GameFunctions {
      */
     public void gameCommence() {
         System.out.println("-------------------------------------------" + "\n");
+        gameOver = true;
+        
     }
 
 
 
     public boolean isGameOver() {
-        return currentQuarter > 4 || account.getBalance() <= 0; // Check if the game is over
+        gameOver = currentQuarter > 4 || account.getBalance() <= 0; // Check if the game is over
+        return gameOver;
     }
 
     public static void main(String[] args) {
@@ -173,7 +177,9 @@ public class GameFunctions {
                 }
             }
         }
-
+        if (newGame.isGameOver()) {
+            System.out.println("Game Over! You have reached the end of your journey on Wool Street.");
+        }
         if(newGame.getAccount().getBalance() <= 0) {
             System.out.println("You went bankrupt! Guess you were a sheep in wolf's clothing instead!");
         } else {
