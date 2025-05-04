@@ -1,9 +1,22 @@
+import java.util.List;
 import java.util.Scanner;
 
 public class ScenarioOne {
 
     // Takes care of starting the scenario, as there are multiple options, 3 
     // rooms there could be for each scenario.
+
+    private GameFunctions gameFunction;
+    private Account account;
+    private List<Stock> stockPortfolio;
+    private Employees employees;
+
+    public ScenarioOne(GameFunctions gameFunction) {
+        this.gameFunction = gameFunction;
+        this.employees = gameFunction.getEmployees();
+        this.account = gameFunction.getAccount();
+        this.stockPortfolio = gameFunction.getPortfolio();
+    }
     
     public void startScenarioOne() {
         Scanner in = new Scanner(System.in);

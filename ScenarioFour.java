@@ -62,7 +62,7 @@ public class ScenarioFour {
         String choice = scan.nextLine();
 
         if(choice.equals("1")) {
-            gameFunction.getEmployees().changeMoral(-10); //decreases employee morale by 10
+            gameFunction.getEmployees().changeMorale(-10); //decreases employee morale by 10
         }
         else if(choice.equals("2")) {
             gameFunction.getAccount().updateBalance(-1000); //withdraws all money from account
@@ -109,9 +109,9 @@ public class ScenarioFour {
         String choice = scan.nextLine();
 
         if(choice.equals("1")) {
-            gameFunction.getEmployees().changeMoral(2.5); //fires all employees
+            gameFunction.getEmployees().changeMorale(2.5); //fires all employees
 
-            gameFunction.getStock().deactivateStock(3); //deactivates 3 random stocks in the list
+            gameFunction.getPortfolio().deactivateStock(3); //deactivates 3 random stocks in the list
         }
         else if(choice.equals("2")) {
             gameFunction.getAccount().updateBalance(-750); //alt method that withdraws all money from account

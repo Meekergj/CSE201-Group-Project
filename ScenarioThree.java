@@ -1,7 +1,20 @@
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
 public class ScenarioThree {
+
+  private GameFunctions gameFunction;
+    private Account account;
+    private List<Stock> stockPortfolio;
+    private Employees employees;
+
+    public ScenarioThree(GameFunctions gameFunction) {
+        this.gameFunction = gameFunction;
+        this.employees = gameFunction.getEmployees();
+        this.account = gameFunction.getAccount();
+        this.stockPortfolio = gameFunction.getPortfolio();
+    }
 
   Random rand = new Random();
   int randomNumber = rand.nextInt(3) + 1;
