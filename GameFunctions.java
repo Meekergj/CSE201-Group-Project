@@ -151,7 +151,7 @@ public class GameFunctions {
         String choice = scanner.nextLine().toLowerCase();
 
         if (isCollapse) {
-            System.out.println("Stocks are crashing again!")
+            System.out.println("Stocks are crashing again!");
             for (Stock stock : portfolio) {
                 // Stock logic
             }
