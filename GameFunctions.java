@@ -18,6 +18,7 @@ public class GameFunctions {
     private List<Stock> portfolio = new ArrayList<>(); // Default empty portfolio
     private int currentQuarter;
     private boolean gameOver = false;
+    private boolean isCollapse = false; // Indicates if a market collapse has occurred
 
     // Do we need setters for these 
     public GameFunctions(Account account, Employees employees, List<Stock> portfolio) {
@@ -136,6 +137,11 @@ public class GameFunctions {
         
     }
 
+    public void startCollapse() {
+        System.out.println("Market collapse imminent!");
+        isCollapse = true;
+    }
+
     public void runMonthlyActivities(int month) {
         System.out.println("Month " + month + " of Quarter " + currentQuarter);
         System.out.println("You can buy shares, hire employees, or manage your portfolio.");
@@ -143,6 +149,13 @@ public class GameFunctions {
 
         Scanner scanner = new Scanner(System.in);
         String choice = scanner.nextLine().toLowerCase();
+
+        if (isCollapse) {
+            System.out.println("Stocks are crashing again!")
+            for (Stock stock : portfolio) {
+                // Stock logic
+            }
+        }
 
         switch (choice) {
             case "buy":

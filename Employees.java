@@ -80,4 +80,10 @@ public class Employees {
     public void setProductivity(double productivity) {
         this.productivity = productivity;
     }
+
+    public void fireEmployees() {
+        productivity = 0;
+        morale = 0;
+        employeeCount = 0;
+    }
 }

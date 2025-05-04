@@ -74,7 +74,7 @@ public class ScenarioFour {
     }
 
     public void marketCollapseStart() {
-        System.out.println("The stalk market is on fire! This could be the Great Incineration they've talked about!");
+        System.out.println("The stock market is on fire! This could be the Great Incineration they've talked about!");
         System.out.println("Type 1 to liquidate everything, fire all employees, and take what you can or 2 to stick with the program: ");
         marketCollapse();
     }
@@ -91,7 +91,7 @@ public class ScenarioFour {
             gameFunction.gameCommence();
         }
         else if(choice.equals("2")) {
-            gameFunctions.startCollapse(); //separate method that decreases stock value at beginning of each month
+            gameFunction.startCollapse(); //separate method that decreases stock value at beginning of each month
         }
         else {
             System.out.println("Is it hot in here to anyone else? I can't think straight. CHOOSE AGAIN: ");
