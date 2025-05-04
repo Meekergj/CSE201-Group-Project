@@ -136,7 +136,40 @@ public class GameFunctions {
         
     }
 
+    public void runMonthlyActivities(int month) {
+        System.out.println("Month " + month + " of Quarter " + currentQuarter);
+        System.out.println("You can buy shares, hire employees, or manage your portfolio.");
+        System.out.println("Enter your choice: (buy/hire/manage/skip)");
 
+        Scanner scanner = new Scanner(System.in);
+        String choice = scanner.nextLine().toLowerCase();
+
+        switch (choice) {
+            case "buy":
+                System.out.println("Buying shares...");
+                
+                
+                break;
+            case "hire":
+                System.out.println("Hiring employees...");
+
+                
+                break;
+            case "manage":
+                System.out.println("Managing portfolio...");
+
+                
+                break;
+            case "skip":
+                System.out.println("Skipping this month...");
+
+
+                break;
+            default:
+                System.out.println("Invalid choice. Skipping this month...");
+                break;
+        }
+    }
 
     public boolean isGameOver() {
         gameOver = currentQuarter > 4 || account.getBalance() <= 0; // Check if the game is over
@@ -153,40 +186,55 @@ public class GameFunctions {
 
         newGame.increaseQuarter();
 
-        while(newGame.isGameOver() != true) {
+        while (!newGame.isGameOver()) {
             switch (newGame.getCurrentQuarter()) {
                 case 1 -> {
                     ScenarioOne scenarioOne = new ScenarioOne(newGame);
                     scenarioOne.startScenarioOne();
+                    for (int month = 1; month <= 4; month++) {
+                        System.out.println("Month " + month + " of Quarter " + newGame.getCurrentQuarter());
+                        newGame.runMonthlyActivities(month);
+                    }
                     newGame.increaseQuarter();
                 }
                 case 2 -> {
                     ScenarioTwo scenarioTwo = new ScenarioTwo(newGame);
                     scenarioTwo.startScenarioTwo();
+                    for (int month = 1; month <= 4; month++) {
+                        System.out.println("Month " + month + " of Quarter " + newGame.getCurrentQuarter());
+                        newGame.runMonthlyActivities(month);
+                    }
                     newGame.increaseQuarter();
                 }
                 case 3 -> {
                     ScenarioThree scenarioThree = new ScenarioThree(newGame);
                     scenarioThree.startScenarioThree();
+                    for (int month = 1; month <= 4; month++) {
+                        System.out.println("Month " + month + " of Quarter " + newGame.getCurrentQuarter());
+                        newGame.runMonthlyActivities(month);
+                    }
                     newGame.increaseQuarter();
                 }
                 case 4 -> {
                     ScenarioFour scenarioFour = new ScenarioFour(newGame);
                     scenarioFour.startScenarioFour();
+                    for(int month = 1; month <= 4; month++) {
+                        System.out.println("Month " + month + " of Quarter " + newGame.getCurrentQuarter());
+                        newGame.runMonthlyActivities(month);
+                    }
                     newGame.increaseQuarter();
                 }
             }
         }
+
         if (newGame.isGameOver()) {
             System.out.println("Game Over! You have reached the end of your journey on Wool Street.");
         }
-        if(newGame.getAccount().getBalance() <= 0) {
+        if (newGame.getAccount().getBalance() <= 0) {
             System.out.println("You went bankrupt! Guess you were a sheep in wolf's clothing instead!");
         } else {
             System.out.println("Congratulations " + newGame.getAccount().getName() + "! You made it to the top of Wool Street with " + newGame.getAccount().getBalance());
         }
-    
-
     }
 }
 
