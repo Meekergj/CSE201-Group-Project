@@ -77,6 +77,8 @@ public class GameFunctions {
         System.out.println("Right, you forgot to mention your name...");
 
         System.out.println("-------------------------------------------" + "\n");
+
+        setPlayerName();
         
     }
 
@@ -121,10 +123,10 @@ public class GameFunctions {
 
         } else if(response.equals("no")) {
             System.out.println("Who put you in charge? Wool Street doesn't wait for nobahhdy!");
-            gameCommence();
+            startGame();
         } else {
             System.out.println("What the flock are you even saying?? I have no idea what to do with that information...");
-            gameCommence();
+            startGame();
         }
     }
 
@@ -193,7 +195,6 @@ public class GameFunctions {
         GameFunctions newGame = new GameFunctions();
     
         newGame.gameIntro();
-        newGame.setPlayerName();
         newGame.inbetweenFirstScenario();
         newGame.startGame();
 
@@ -205,7 +206,6 @@ public class GameFunctions {
                     ScenarioOne scenarioOne = new ScenarioOne(newGame);
                     scenarioOne.startScenarioOne();
                     for (int month = 1; month <= 4; month++) {
-                        System.out.println("Month " + month + " of Quarter " + newGame.getCurrentQuarter());
                         newGame.runMonthlyActivities(month);
                     }
                     newGame.increaseQuarter();
@@ -214,7 +214,6 @@ public class GameFunctions {
                     ScenarioTwo scenarioTwo = new ScenarioTwo(newGame);
                     scenarioTwo.startScenarioTwo();
                     for (int month = 1; month <= 4; month++) {
-                        System.out.println("Month " + month + " of Quarter " + newGame.getCurrentQuarter());
                         newGame.runMonthlyActivities(month);
                     }
                     newGame.increaseQuarter();
@@ -223,7 +222,6 @@ public class GameFunctions {
                     ScenarioThree scenarioThree = new ScenarioThree(newGame);
                     scenarioThree.startScenarioThree();
                     for (int month = 1; month <= 4; month++) {
-                        System.out.println("Month " + month + " of Quarter " + newGame.getCurrentQuarter());
                         newGame.runMonthlyActivities(month);
                     }
                     newGame.increaseQuarter();
@@ -232,7 +230,6 @@ public class GameFunctions {
                     ScenarioFour scenarioFour = new ScenarioFour(newGame);
                     scenarioFour.startScenarioFour();
                     for(int month = 1; month <= 4; month++) {
-                        System.out.println("Month " + month + " of Quarter " + newGame.getCurrentQuarter());
                         newGame.runMonthlyActivities(month);
                     }
                     newGame.increaseQuarter();
