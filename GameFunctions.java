@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -10,11 +12,50 @@ import java.util.Scanner;
  * Purpose: Runs functions that set up the game and give opening information about how it works. Does not include mechanics. 
  */
 public class GameFunctions {
-    private String playerName;
+
+    private static Account account = new Account(); // Default account with initial balance
+    private static Employees employees = new Employees(); // Default employees
+    private static List<Stock> portfolio = new ArrayList<>(); // Default empty portfolio
+    private int currentQuarter;
+    private boolean gameOver = false;
+    private boolean isCollapse = false; // Indicates if a market collapse has occurred
+
+    // Do we need setters for these 
+    public GameFunctions(Account account, Employees employees, List<Stock> portfolio) {
+        this.account = account;
+        this.employees = employees;
+        this.portfolio = portfolio;
+        this.currentQuarter = 1;
+    }
 
     public GameFunctions() {
-        this.playerName = "Player";
+        this.account.setName("Default Player");
+        this.currentQuarter = 0; // Initialize currentQuarter to 0
     }
+
+    public void increaseQuarter() {
+        this.currentQuarter++;
+    }   
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    public void setEmployees(Employees employees) {
+        this.employees = employees;
+    }
+
+    public void setPortfolio(List<Stock> portfolio) {
+        this.portfolio = portfolio;
+        }
+
+        public Account getAccount() { return this.account; }
+        public Employees getEmployees() { return this.employees; }
+        public List<Stock> getPortfolio() { return this.portfolio; }
+
+    public int getCurrentQuarter() {
+        return currentQuarter;
+    }   
 
     /**
      * Gives the player an introduction to the game setting.
@@ -35,15 +76,17 @@ public class GameFunctions {
         System.out.print("I'd rather be bahhhtty and a millionaire than working a 9-5 at Macdonald's or Shears.");
         System.out.println("Right, you forgot to mention your name...");
 
-        setPlayerName();
         System.out.println("-------------------------------------------" + "\n");
+
+        setPlayerName();
         
-        startGame();
     }
 
     /**
      * Sets the player's name when prompted.
      */
+    private String playerName;
+
     public void setPlayerName() {
         Scanner playerScanner = new Scanner(System.in);
 
@@ -51,6 +94,17 @@ public class GameFunctions {
         this.playerName = playerScanner.nextLine();
 
         System.out.println("Great. Let's get you to the top " + playerName + "!");
+        Account newAccount = new Account(1000, playerName);
+        this.setAccount(newAccount);
+    }
+
+    public void inbetweenFirstScenario() {
+        System.out.println("Before we get started, let's go over some basics.");
+        System.out.println("You start with a balance of .00 and your goal is to increase your wealth by making smart investments.");
+        System.out.println("Each quarter, you'll face different scenarios that will test your investment skills.");
+        System.out.println("Make choices wisely, as they will affect your balance and the outcome of the game.");
+        System.out.println("Remember, you can go bankrupt if your balance drops to .00 or below.");
+        System.out.println("Good luck, " + this.getAccount().getName() + "! Let's get started!");
     }
 
     /**
@@ -64,10 +118,12 @@ public class GameFunctions {
         String response = scanner.nextLine().toLowerCase();
 
         if(response.equals("yes")) {
-            gameCommence();
+            System.out.println("Great! Let's get you started on your journey to the top of Wool Street!");
+            System.out.println("Onto our first quarter...");
+
         } else if(response.equals("no")) {
             System.out.println("Who put you in charge? Wool Street doesn't wait for nobahhdy!");
-            gameCommence();
+            startGame();
         } else {
             System.out.println("What the flock are you even saying?? I have no idea what to do with that information...");
             startGame();
@@ -79,14 +135,132 @@ public class GameFunctions {
      */
     public void gameCommence() {
         System.out.println("-------------------------------------------" + "\n");
+        gameOver = true;
+        
+    }
+
+    public void deactivateStock(int index) {
+        portfolio.remove(index);
+    }
+
+    public void startCollapse() {
+        System.out.println("Market collapse imminent!");
+        isCollapse = true;
+    }
+
+    public void runMonthlyActivities(int month) {
+        System.out.println("Month " + month + " of Quarter " + currentQuarter);
+        System.out.println("You can buy shares, hire employees, or manage your portfolio.");
+        System.out.println("Enter your choice, invalid input will skip: (buy/hire/skip)");
+
+        Scanner scanner = new Scanner(System.in);
+        String choice = scanner.nextLine().toLowerCase();
+
+        if (isCollapse) {
+            System.out.println("Stocks are crashing again!");
+            for (Stock stock : portfolio) {
+                // Stock logic
+            }
+        }
+
+        switch (choice) {
+            case "buy":
+                System.out.println("Buying share");
+                System.out.println("Enter value of shares: ");
+                int shares = scanner.nextInt();
+
+                buyShares(shares); // Leaving this for Braden to figure out
+                
+                break;
+            case "hire":
+                System.out.println("Hiring employees...");
+                hireEmployee(); // Leaving this for Braden to figure out
+                
+                break;
+            case "skip":
+                System.out.println("Skipping this month...");
+                break;
+            default:
+                System.out.println("Invalid choice. Skipping this month...");
+                break;
+        }
+    }
+
+    public boolean isGameOver() {
+        gameOver = currentQuarter > 4 || account.getBalance() <= 0; // Check if the game is over
+        return gameOver;
     }
 
     public static void main(String[] args) {
-        GameFunctions newGame = new GameFunctions();
+        portfolio.add(new Stock("Sahara", 9));
+        portfolio.add(new Stock("Gogle", 2));
+        portfolio.add(new Stock("Sahara", 9));
+        portfolio.add(new Stock("Jim Bortons", 6));
+        portfolio.add(new Stock("Blue Skies", 5));
+        portfolio.add(new Stock("Null Co", 5));
+        portfolio.add(new Stock("Bahthesda", 8));
+        portfolio.add(new Stock("Shallow Mind", 4));
+        portfolio.add(new Stock("Pear", 4));
+        portfolio.add(new Stock("Unusual Oil", 7));
+
+        GameFunctions newGame = new GameFunctions(account, employees, portfolio);
     
         newGame.gameIntro();
+        newGame.inbetweenFirstScenario();
+        newGame.startGame();
+
+        newGame.increaseQuarter();
+
+        while (!newGame.isGameOver()) {
+            switch (newGame.getCurrentQuarter()) {
+                case 1 -> {
+                    ScenarioOne scenarioOne = new ScenarioOne(); // Braden will also have to figure this out according to what Gavin does
+                    scenarioOne.startScenarioOne();
+                    for (int month = 1; month <= 4; month++) {
+                        newGame.runMonthlyActivities(month);
+                        newGame.getAccount().updateBalance(newGame.getEmployees().setTotalProduction());
+                    }
+                    newGame.increaseQuarter();
+                }
+                case 2 -> {
+                    ScenarioTwo scenarioTwo = new ScenarioTwo(newGame);
+                    scenarioTwo.startScenarioTwo();
+                    for (int month = 1; month <= 4; month++) {
+                        newGame.runMonthlyActivities(month);
+                        newGame.getAccount().updateBalance(newGame.getEmployees().setTotalProduction());
+                    }
+                    newGame.increaseQuarter();
+                }
+                case 3 -> {
+                    ScenarioThree scenarioThree = new ScenarioThree(newGame);
+                    scenarioThree.startScenarioThree();
+                    for (int month = 1; month <= 4; month++) {
+                        newGame.runMonthlyActivities(month);
+                        newGame.getAccount().updateBalance(newGame.getEmployees().setTotalProduction());
+                    }
+                    newGame.increaseQuarter();
+                }
+                case 4 -> {
+                    ScenarioFour scenarioFour = new ScenarioFour(newGame);
+                    scenarioFour.startScenarioFour();
+                    for(int month = 1; month <= 4; month++) {
+                        newGame.runMonthlyActivities(month);
+                        newGame.getAccount().updateBalance(newGame.getEmployees().setTotalProduction());
+                    }
+                    newGame.increaseQuarter();
+                }
+            }
+        }
+
+        if (newGame.isGameOver()) {
+            System.out.println("Game Over! You have reached the end of your journey on Wool Street.");
+        }
+        if (newGame.getAccount().getBalance() <= 0) {
+            System.out.println("You went bankrupt! Guess you were a sheep in wolf's clothing instead!");
+        } else {
+            System.out.println("Congratulations " + newGame.getAccount().getName() + "! You made it to the top of Wool Street with " + newGame.getAccount().getBalance());
+        }
     }
-    
 }
 
 
