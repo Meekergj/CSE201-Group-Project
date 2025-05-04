@@ -49,7 +49,6 @@ public class ScenarioTwo {
 
         // Add dialogue or logic for the chosen scenario here, or starting the next
         // room or quarter in the game.
-
     }
 
     public void optionOneStart() {
