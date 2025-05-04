@@ -139,6 +139,10 @@ public class GameFunctions {
         
     }
 
+    public void deactivateStock(int index) {
+        portfolio.remove(index);
+    }
+
     public void startCollapse() {
         System.out.println("Market collapse imminent!");
         isCollapse = true;
@@ -147,7 +151,7 @@ public class GameFunctions {
     public void runMonthlyActivities(int month) {
         System.out.println("Month " + month + " of Quarter " + currentQuarter);
         System.out.println("You can buy shares, hire employees, or manage your portfolio.");
-        System.out.println("Enter your choice: (buy/hire/manage/skip)");
+        System.out.println("Enter your choice, invalid input will skip: (buy/hire/skip)");
 
         Scanner scanner = new Scanner(System.in);
         String choice = scanner.nextLine().toLowerCase();
@@ -161,24 +165,20 @@ public class GameFunctions {
 
         switch (choice) {
             case "buy":
-                System.out.println("Buying shares...");
-                
+                System.out.println("Buying share");
+                System.out.println("Enter value of shares: ");
+                int shares = scanner.nextInt();
+
+                buyShares(shares); // Leaving this for Braden to figure out
                 
                 break;
             case "hire":
                 System.out.println("Hiring employees...");
-
-                
-                break;
-            case "manage":
-                System.out.println("Managing portfolio...");
-
+                hireEmployee(); // Leaving this for Braden to figure out
                 
                 break;
             case "skip":
                 System.out.println("Skipping this month...");
-
-
                 break;
             default:
                 System.out.println("Invalid choice. Skipping this month...");
@@ -214,7 +214,7 @@ public class GameFunctions {
         while (!newGame.isGameOver()) {
             switch (newGame.getCurrentQuarter()) {
                 case 1 -> {
-                    ScenarioOne scenarioOne = new ScenarioOne();
+                    ScenarioOne scenarioOne = new ScenarioOne(); // Braden will also have to figure this out according to what Gavin does
                     scenarioOne.startScenarioOne();
                     for (int month = 1; month <= 4; month++) {
                         newGame.runMonthlyActivities(month);

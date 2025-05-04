@@ -84,8 +84,8 @@ public class Employees {
 
     public void hireEmployees() {
         employeeCount ++;
-        productivity += 10; // Example: each new employee adds 10 to productivity
-        morale += 2.5; // Example: each new employee adds 5 to morale
+        productivity += 10; 
+        morale += 2.5; 
         setTotalProduction();
     }
 

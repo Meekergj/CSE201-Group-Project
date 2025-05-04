@@ -111,7 +111,9 @@ public class ScenarioFour {
         if(choice.equals("1")) {
             gameFunction.getEmployees().changeMorale(2.5); //fires all employees
 
-            gameFunction.getPortfolio().deactivateStock(3); //deactivates 3 random stocks in the list
+            for(int i = 0; i < 3; i++) {
+                gameFunction.deactivateStock(i); //deactivates first 3 stocks in the list
+            }
         }
         else if(choice.equals("2")) {
             gameFunction.getAccount().updateBalance(-750); //alt method that withdraws all money from account
