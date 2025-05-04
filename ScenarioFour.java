@@ -21,12 +21,12 @@ public class ScenarioFour {
     private List<Stock> stockPortfolio;
     private Employees employees;
 
-    public ScenarioFour(GameFunctions gameFunction) {
-        this.gameFunction = gameFunction;
-        this.employees = gameFunction.getEmployees();
-        this.account = gameFunction.getAccount();
-        this.stockPortfolio = gameFunction.getPortfolio();
-    }
+  public ScenarioFour(GameFunctions gameFunction) {
+    this.gameFunction = gameFunction;
+    this.employees = gameFunction.getEmployees();
+    this.account = gameFunction.getAccount();
+    this.stockPortfolio = gameFunction.getPortfolio();
+  }
 
     public void startScenarioFour() {
         switch (randomNumber) {
@@ -62,12 +62,10 @@ public class ScenarioFour {
         String choice = scan.nextLine();
 
         if(choice.equals("1")) {
-            for(Employees e : employees) {
-                e.decreaseMorale(4);
-            }
+            gameFunction.getEmployees().changeMorale(-10); //decreases employee morale by 10
         }
         else if(choice.equals("2")) {
-            Account.withdrawMoney(1000);
+            gameFunction.getAccount().updateBalance(-1000); //withdraws all money from account
         }
         else {
             System.out.println("You're too distraught to do anything else, choose again: ");
@@ -85,15 +83,15 @@ public class ScenarioFour {
         String choice = scan.nextLine();
 
         if(choice.equals("1")) {
-            for(Employees e : employees) {
-                e.fireEmployee();
+            gameFunction.getEmployees().fireEmployees(); //fires all employees
+            for (Stock s : stockPortfolio) {
+                s.sellShares(s.getSharesOwned()); //deactivates all stocks in the list
             }
 
-            Stock.cashout(); //withdraws all money accumulated from Stock class
-            GameFunctions.endGame();
+            gameFunction.gameCommence();
         }
         else if(choice.equals("2")) {
-            GameFunctions.startCollapse(); //separate method that decreases stock value at beginning of each month
+            gameFunction.startCollapse(); //separate method that decreases stock value at beginning of each month
         }
         else {
             System.out.println("Is it hot in here to anyone else? I can't think straight. CHOOSE AGAIN: ");
@@ -111,14 +109,12 @@ public class ScenarioFour {
         String choice = scan.nextLine();
 
         if(choice.equals("1")) {
-            for(Employees e : employees) {
-                e.increaseMorale(2.5);
-            }
+            gameFunction.getEmployees().changeMorale(2.5); //fires all employees
 
-            Stock.deactivateStock(3); //deactivates 3 random stocks in the list
+            gameFunction.getPortfolio().deactivateStock(3); //deactivates 3 random stocks in the list
         }
         else if(choice.equals("2")) {
-            Account.withdrawMoney(); //alt method that withdraws all money from account
+            gameFunction.getAccount().updateBalance(-750); //alt method that withdraws all money from account
         }
         else {
             System.out.println("You really feel the need to be a hero here, choose again: ");

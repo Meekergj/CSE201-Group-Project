@@ -112,9 +112,9 @@ public class ScenarioThree {
     while (choice != "1" || choice != "2") {
       if (choice == "1") {
         // Update to use shares from Stock class if 
-        Account.updateBalance(2000);
+        gameFunction.getAccount().updateBalance(2000);
       } else if (choice == "2") {
-        Account.updateBalance(-2000);
+        gameFunction.getAccount().updateBalance(-2000);
       }
     }
   }
