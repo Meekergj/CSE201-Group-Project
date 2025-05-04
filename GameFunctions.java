@@ -207,6 +207,7 @@ public class GameFunctions {
                     scenarioOne.startScenarioOne();
                     for (int month = 1; month <= 4; month++) {
                         newGame.runMonthlyActivities(month);
+                        newGame.getAccount().updateBalance(newGame.getEmployees().setTotalProduction());
                     }
                     newGame.increaseQuarter();
                 }
@@ -215,6 +216,7 @@ public class GameFunctions {
                     scenarioTwo.startScenarioTwo();
                     for (int month = 1; month <= 4; month++) {
                         newGame.runMonthlyActivities(month);
+                        newGame.getAccount().updateBalance(newGame.getEmployees().setTotalProduction());
                     }
                     newGame.increaseQuarter();
                 }
@@ -223,6 +225,7 @@ public class GameFunctions {
                     scenarioThree.startScenarioThree();
                     for (int month = 1; month <= 4; month++) {
                         newGame.runMonthlyActivities(month);
+                        newGame.getAccount().updateBalance(newGame.getEmployees().setTotalProduction());
                     }
                     newGame.increaseQuarter();
                 }
@@ -231,6 +234,7 @@ public class GameFunctions {
                     scenarioFour.startScenarioFour();
                     for(int month = 1; month <= 4; month++) {
                         newGame.runMonthlyActivities(month);
+                        newGame.getAccount().updateBalance(newGame.getEmployees().setTotalProduction());
                     }
                     newGame.increaseQuarter();
                 }

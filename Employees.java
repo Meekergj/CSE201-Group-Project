@@ -13,6 +13,7 @@ public class Employees {
     private double morale;
     private double productivity;
     private int employeeCount = 0; // Optional: if you want to track number of employees
+    private double totalProduction = 0;
 
     // Constructor
     /*
@@ -79,6 +80,18 @@ public class Employees {
      */
     public void setProductivity(double productivity) {
         this.productivity = productivity;
+    }
+
+    public void hireEmployees() {
+        employeeCount ++;
+        productivity += 10; // Example: each new employee adds 10 to productivity
+        morale += 2.5; // Example: each new employee adds 5 to morale
+        setTotalProduction();
+    }
+
+    public double setTotalProduction() {
+        totalProduction = productivity * morale;
+        return totalProduction;
     }
 
     public void fireEmployees() {

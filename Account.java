@@ -32,7 +32,7 @@ public class Account {
     return balance;
   }
 
-  public String updateBalance(int depositOrWithdraw) {
+  public String updateBalance(double depositOrWithdraw) {
     balance += depositOrWithdraw;
     mostRecentChange = depositOrWithdraw;
     return ("Most recent change in your account was $" + depositOrWithdraw + ". New balance is $" + balance);

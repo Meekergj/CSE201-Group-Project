@@ -58,12 +58,12 @@ public class ScenarioThree {
 
     while (choice != "1" || choice != "2") {
       if (choice == "1") { // Pay for health
-        System.out.println("Your employee made a swift recovery! (-$1000)");
-        Account.withdrawMoney(1000);
+        System.out.println("Your employee made a swift recovery! (-$500)");
+        gameFunction.getAccount().updateBalance(-500);
       } else if (choice == "2") {
 
         // Add an employee to the array
-        // and make him ass
+        gameFunction.getEmployees().changeProductivity(-30);
 
       }
     }
@@ -85,16 +85,14 @@ public class ScenarioThree {
 
     while (choice != "1" || choice != "2") {
       if (choice == "1") {
-        System.out.println("You pay the mother enough money to cover the");
-        System.out.println("damages and keep quiet. (-$2000)");
+        System.out.println("You pay the mother enough money to cover the ");
+        System.out.print("damages and keep quiet. (-$2000)");
 
-        Account.withdrawMoney(2000);
+        gameFunction.getAccount().updateBalance(2000);
       } else if (choice == "2") {
-        Systen.out.println("There was a witness at the scene and word got");
-        Systen.out.println("around to your employees.");
-        for (Employee e : employees) {
-          e.decreaseMorale(4);
-        }
+        System.out.println("There was a witness at the scene and word got");
+        System.out.print("around to your employees.");
+        gameFunction.getEmployees().changeProductivity(-10);
       }
     }
   }
