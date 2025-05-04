@@ -13,9 +13,9 @@ import java.util.Scanner;
  */
 public class GameFunctions {
 
-    private Account account = new Account(); // Default account with initial balance
-    private Employees employees = new Employees(); // Default employees
-    private List<Stock> portfolio = new ArrayList<>(); // Default empty portfolio
+    private static Account account = new Account(); // Default account with initial balance
+    private static Employees employees = new Employees(); // Default employees
+    private static List<Stock> portfolio = new ArrayList<>(); // Default empty portfolio
     private int currentQuarter;
     private boolean gameOver = false;
 
@@ -97,10 +97,10 @@ public class GameFunctions {
 
     public void inbetweenFirstScenario() {
         System.out.println("Before we get started, let's go over some basics.");
-        System.out.println("You start with a balance of $1000.00 and your goal is to increase your wealth by making smart investments.");
+        System.out.println("You start with a balance of .00 and your goal is to increase your wealth by making smart investments.");
         System.out.println("Each quarter, you'll face different scenarios that will test your investment skills.");
         System.out.println("Make choices wisely, as they will affect your balance and the outcome of the game.");
-        System.out.println("Remember, you can go bankrupt if your balance drops to $0.00 or below.");
+        System.out.println("Remember, you can go bankrupt if your balance drops to .00 or below.");
         System.out.println("Good luck, " + this.getAccount().getName() + "! Let's get started!");
     }
 
@@ -136,15 +136,24 @@ public class GameFunctions {
         
     }
 
-
-
     public boolean isGameOver() {
         gameOver = currentQuarter > 4 || account.getBalance() <= 0; // Check if the game is over
         return gameOver;
     }
 
     public static void main(String[] args) {
-        GameFunctions newGame = new GameFunctions();
+        portfolio.add(new Stock("Sahara", 9));
+        portfolio.add(new Stock("Gogle", 2));
+        portfolio.add(new Stock("Sahara", 9));
+        portfolio.add(new Stock("Jim Bortons", 6));
+        portfolio.add(new Stock("Blue Skies", 5));
+        portfolio.add(new Stock("Null Co", 5));
+        portfolio.add(new Stock("Bahthesda", 8));
+        portfolio.add(new Stock("Shallow Mind", 4));
+        portfolio.add(new Stock("Pear", 4));
+        portfolio.add(new Stock("Unusual Oil", 7));
+
+        GameFunctions newGame = new GameFunctions(account, employees, portfolio);
     
         newGame.gameIntro();
         newGame.setPlayerName();
@@ -156,7 +165,7 @@ public class GameFunctions {
         while(newGame.isGameOver() != true) {
             switch (newGame.getCurrentQuarter()) {
                 case 1 -> {
-                    ScenarioOne scenarioOne = new ScenarioOne(newGame);
+                    ScenarioOne scenarioOne = new ScenarioOne();
                     scenarioOne.startScenarioOne();
                     newGame.increaseQuarter();
                 }

@@ -10,7 +10,7 @@
  */
 public class Employees {
     // Attributes
-    private double morale;
+    private double moral;
     private double productivity;
     private int employeeCount = 0; // Optional: if you want to track number of employees
 
@@ -18,14 +18,14 @@ public class Employees {
     /*
      * 
      */
-    public Employees(double morale, double productivity, int employeeCount) {
-        this.morale = morale;
+    public Employees(double moral, double productivity, int employeeCount) {
+        this.moral = moral;
         this.productivity = productivity;
         this.employeeCount = employeeCount;
     }
 
     public Employees() {
-        this.morale = 0.0;
+        this.moral = 0.0;
         this.productivity = 0.0;
         this.employeeCount = 0;
     }  
@@ -35,7 +35,7 @@ public class Employees {
      * 
      */
     public double valueOut() {
-        return productivity + morale;
+        return productivity + moral;
     }
 
     /*
@@ -48,8 +48,8 @@ public class Employees {
     /*
      * 
      */
-    public void changeMorale(double change) {
-        this.morale = morale + change;
+    public void changeMoral(double change) {
+        this.moral = moral + change;
     }
 
     // Getters and setters
@@ -57,14 +57,14 @@ public class Employees {
      * 
      */
     public double getMorale() {
-        return morale;
+        return moral;
     }
 
     /*
      * 
      */
     public void setMorale(double morale) {
-        this.morale = morale;
+        this.moral = morale;
     }
 
     /*

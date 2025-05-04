@@ -32,8 +32,8 @@ public class ScenarioOne {
                     startScenarioOne();
                 }
             }
-
         }
+        in.close();
     }
     // Change this to match our second option for scenario one
     public void startOptionTwoScenarioOne() {
@@ -71,6 +71,7 @@ public class ScenarioOne {
                 System.out.println("Please enter a number.");
             }
         }
+        in.close();
     } 
     // Change this to match our third option for scenario one
     public void startOptionThreeScenarioOne() {
@@ -108,6 +109,7 @@ public class ScenarioOne {
                 System.out.println("Please enter a number.");
             }
         }
+        in.close();
     } 
 
 }

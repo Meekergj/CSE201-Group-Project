@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -14,6 +15,18 @@ public class ScenarioFour {
     Scanner scan = new Scanner(System.in);
     Random rand = new Random();
     int randomNumber = rand.nextInt(3) + 1;
+
+    private GameFunctions gameFunction;
+    private Account account;
+    private List<Stock> stockPortfolio;
+    private Employees employees;
+
+  public ScenarioFour(GameFunctions gameFunction) {
+    this.gameFunction = gameFunction;
+    this.employees = gameFunction.getEmployees();
+    this.account = gameFunction.getAccount();
+    this.stockPortfolio = gameFunction.getPortfolio();
+  }
 
     public void startScenarioFour() {
         switch (randomNumber) {
@@ -49,12 +62,10 @@ public class ScenarioFour {
         String choice = scan.nextLine();
 
         if(choice.equals("1")) {
-            for(Employees e : employees) {
-                e.decreaseMorale(4);
-            }
+            
         }
         else if(choice.equals("2")) {
-            Account.withdrawMoney(1000);
+            
         }
         else {
             System.out.println("You're too distraught to do anything else, choose again: ");
@@ -72,15 +83,10 @@ public class ScenarioFour {
         String choice = scan.nextLine();
 
         if(choice.equals("1")) {
-            for(Employees e : employees) {
-                e.fireEmployee();
-            }
-
-            Stock.cashout(); //withdraws all money accumulated from Stock class
-            GameFunctions.endGame();
+            
         }
         else if(choice.equals("2")) {
-            GameFunctions.startCollapse(); //separate method that decreases stock value at beginning of each month
+            
         }
         else {
             System.out.println("Is it hot in here to anyone else? I can't think straight. CHOOSE AGAIN: ");
@@ -98,14 +104,10 @@ public class ScenarioFour {
         String choice = scan.nextLine();
 
         if(choice.equals("1")) {
-            for(Employees e : employees) {
-                e.increaseMorale(2.5);
-            }
-
-            Stock.deactivateStock(3); //deactivates 3 random stocks in the list
+            
         }
         else if(choice.equals("2")) {
-            Account.withdrawMoney(); //alt method that withdraws all money from account
+            
         }
         else {
             System.out.println("You really feel the need to be a hero here, choose again: ");
