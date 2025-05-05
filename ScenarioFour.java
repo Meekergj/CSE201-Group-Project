@@ -12,7 +12,6 @@ import java.util.Scanner;
  * Purpose: Provides the methods which will be randomly selected at the beginning of the fourth scenario. 
  */
 public class ScenarioFour {
-    Scanner scan = new Scanner(System.in);
     Random rand = new Random();
     int randomNumber = rand.nextInt(3) + 1;
 
@@ -20,8 +19,10 @@ public class ScenarioFour {
     private Account account;
     private List<Stock> stockPortfolio;
     private Employees employees;
+    private Scanner scanner;
 
-  public ScenarioFour(GameFunctions gameFunction) {
+  public ScenarioFour(GameFunctions gameFunction, Scanner scanner) {
+    this.scanner = scanner;
     this.gameFunction = gameFunction;
     this.employees = gameFunction.getEmployees();
     this.account = gameFunction.getAccount();
@@ -31,16 +32,16 @@ public class ScenarioFour {
     public void startScenarioFour() {
         switch (randomNumber) {
             case 1 -> {
-                System.out.println("Scenario Four: You have a choice to make!");
+                System.out.println("Quarter Four: You have a choice to make!");
                 girlfriendBreakupStart();
             }
             case 2 -> {
-                System.out.println("Scenario Four: A different path awaits you!");
+                System.out.println("Quarter Four: A different path awaits you!");
                 marketCollapseStart();
                 // Logic for another option can be added here
             }
             case 3 -> {
-                System.out.println("Scenario Four: A surprise event occurs!");
+                System.out.println("Quarter Four: A surprise event occurs!");
                 rivalMercenariesStart();
                 // Logic for a surprise event can be added here
             }
@@ -54,12 +55,12 @@ public class ScenarioFour {
 
     public void girlfriendBreakupStart() {
         System.out.println("Your girlfriend dumped you out of nowhere and you're pretty maaaaaddd.");
-        System.out.println("Type 1 to vent to your employees or 2 to impulse buy a boat: ");
+        System.out.println("Type 1 to crashout on your employees or 2 to impulse buy a boat: ");
         girlfriendBreakup();
     }
     
     public void girlfriendBreakup() {
-        String choice = scan.nextLine();
+        String choice = scanner.nextLine();
 
         if(choice.equals("1")) {
             gameFunction.getEmployees().changeMorale(-10); //decreases employee morale by 10
@@ -80,14 +81,14 @@ public class ScenarioFour {
     }
 
     public void marketCollapse() {
-        String choice = scan.nextLine();
+        String choice = scanner.nextLine();
 
         if(choice.equals("1")) {
-            gameFunction.getEmployees().fireEmployees(); //fires all employees
+            gameFunction.getEmployees().setEmployeeCount(0); //fires all employees
+            gameFunction.getEmployees().changeMorale(0); //decreases employee morale by 10
             for (Stock s : stockPortfolio) {
                 s.sellShares(s.getSharesOwned()); //deactivates all stocks in the list
             }
-
             gameFunction.gameCommence();
         }
         else if(choice.equals("2")) {
@@ -106,7 +107,7 @@ public class ScenarioFour {
     }
 
     public void rivalMercenaries() {
-        String choice = scan.nextLine();
+        String choice = scanner.nextLine();
 
         if(choice.equals("1")) {
             gameFunction.getEmployees().changeMorale(2.5); //fires all employees

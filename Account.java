@@ -1,27 +1,27 @@
 public class Account {
   private double balance;
-  private String accountHolder;
+  private String name;
   private double mostRecentChange;
   
 
   // constructor to start with custom starting balance (might go unused)
-  public Account(double defaultBalance, String accountHolder) {
+  public Account(double defaultBalance, String name) {
     this.balance = defaultBalance;
-    this.accountHolder = accountHolder;
+    this.name = name;
   }
 
   // default constructor
   public Account() {
     balance = 1000;
-    accountHolder = "Default Account Holder";
+    name = "Default Account Holder";
   }
 
   public String getName() {
-    return accountHolder;
+    return name;
   }
 
   public void setName(String accountHolder) {
-    this.accountHolder = accountHolder;
+    this.name = accountHolder;
   }
 
   public void setBalance(double newBalance) {

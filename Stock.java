@@ -47,6 +47,11 @@ public class Stock {
     public double getChangeInValue() {
         return changeInValue;
     }
+    
+    public void setChangeInValue(double changeInValue) {
+        this.changeInValue = changeInValue;
+    }  
+    
 
     public double getSharesOwned() {
         return sharesOwned;

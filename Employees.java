@@ -61,6 +61,14 @@ public class Employees {
         return morale;
     }
 
+    public int getEmployeeCount() {
+        return employeeCount;
+    }
+
+    public void setEmployeeCount(int employeeCount) {
+        this.employeeCount = employeeCount;
+    }
+
     /*
      * 
      */
@@ -82,12 +90,15 @@ public class Employees {
         this.productivity = productivity;
     }
 
-    public void hireEmployees() {
-        employeeCount ++;
-        productivity += 10; 
-        morale += 2.5; 
+    public double hireEmployees(int count) {
+        double costPerEmployee = 50.0; 
+        employeeCount += count;
+        productivity += 10 * count;
+        morale += 2.5 * count;
         setTotalProduction();
+        return count * costPerEmployee;
     }
+    
 
     public double setTotalProduction() {
         totalProduction = productivity * morale;

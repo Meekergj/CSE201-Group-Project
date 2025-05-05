@@ -1,24 +1,25 @@
 import java.util.List;
-import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
 public class ScenarioThree {
 
-  private GameFunctions gameFunction;
-    private Account account;
-    private List<Stock> stockPortfolio;
-    private Employees employees;
-
-    public ScenarioThree(GameFunctions gameFunction) {
-        this.gameFunction = gameFunction;
-        this.employees = gameFunction.getEmployees();
-        this.account = gameFunction.getAccount();
-        this.stockPortfolio = gameFunction.getPortfolio();
-    }
-
   Random rand = new Random();
   int randomNumber = rand.nextInt(3) + 1;
+
+  private GameFunctions gameFunction;
+  private Account account;
+  private List<Stock> stockPortfolio;
+  private Employees employees;
+  private Scanner scanner;
+
+  public ScenarioThree(GameFunctions gameFunction, Scanner scanner) {
+      this.scanner = scanner;
+      this.gameFunction = gameFunction;
+      this.employees = gameFunction.getEmployees();
+      this.account = gameFunction.getAccount();
+      this.stockPortfolio = gameFunction.getPortfolio();
+  }
 
   public void startScenarioThree() {
     switch (randomNumber) {
@@ -52,20 +53,32 @@ public class ScenarioThree {
     System.out.println("pay to get them the best doctors OR type 2 to forget");
     System.out.println("about them and hire Bateman instead.");
 
-    Scanner scan = new Scanner(System.in);
     
-    System.out.print("> \n");
-    String choice = scan.nextLine();
-
-    while (choice != "1" || choice != "2") {
-      if (choice == "1") { // Pay for health
-        System.out.println("Your employee made a swift recovery! (-$500)");
-        gameFunction.getAccount().updateBalance(-500);
-      } else if (choice == "2") {
-
-        // Add an employee to the array
-        gameFunction.getEmployees().changeProductivity(-30);
-
+    String choice = scanner.next();
+    int playersChoiceInt = -1;
+    
+    while (playersChoiceInt != 1 && playersChoiceInt != 2) {
+      try {
+        playersChoiceInt = Integer.parseInt(choice);
+      } catch (NumberFormatException e) {
+        // Player did not enter a number.
+        System.out.println("Try Again. Please enter a number.");
+      }
+      switch (playersChoiceInt) {
+        case 1 -> { // Pay for health
+          System.out.println("Your employee made a swift recovery! (-$500)");
+          gameFunction.getAccount().updateBalance(-500);
+        }
+        case 2 -> {
+          // Add an employee to the array
+          gameFunction.getEmployees().changeProductivity(-30);
+          System.out.println("You hired Bahhtrick Bateman. (-$1000)");
+          gameFunction.getAccount().updateBalance(-1000);
+        }
+        default -> {
+          System.out.println("Is it hot in here to anyone else? I can't think straight. CHOOSE AGAIN: ");
+          batemanEvent();
+        }
       }
     }
   }
@@ -79,18 +92,23 @@ public class ScenarioThree {
     System.out.println("with the consequences or type 2 to drive away and");
     System.out.println("act like nothing happened");
 
-    Scanner scan = new Scanner(System.in);
 
-    System.out.print("> \n");
-    String choice = scan.nextLine();
+    String choice = scanner.nextLine();
+    int playersChoiceInt = -1;
 
-    while (choice != "1" || choice != "2") {
-      if (choice == "1") {
+    while (playersChoiceInt != 1 && playersChoiceInt != 2) {
+      try {
+        playersChoiceInt = Integer.parseInt(choice);
+      } catch (NumberFormatException e) {
+        // Player did not enter a number.
+        System.out.println("Try Again. Please enter a number.");
+      }
+      if (playersChoiceInt == 1) {
         System.out.println("You pay the mother enough money to cover the ");
         System.out.print("damages and keep quiet. (-$2000)");
 
         gameFunction.getAccount().updateBalance(2000);
-      } else if (choice == "2") {
+      } else if (playersChoiceInt == 2) {
         System.out.println("There was a witness at the scene and word got");
         System.out.print("around to your employees.");
         gameFunction.getEmployees().changeProductivity(-10);
@@ -104,17 +122,24 @@ public class ScenarioThree {
     System.out.println("to buy even more!");
     // Give them option to buy amount of stock shares
     // Maybe display the price of the stock at the time of the transaction and total
-    Scanner scan = new Scanner(System.in);
 
-    System.out.print("> \n");
-    String choice = scan.nextLine();
+    String choice = scanner.nextLine();
+    int playersChoiceInt = -1;
 
-    while (choice != "1" || choice != "2") {
-      if (choice == "1") {
+    while (playersChoiceInt != 1 && playersChoiceInt != 2) {
+    try {
+        playersChoiceInt = Integer.parseInt(choice);
+      } catch (NumberFormatException e) {
+        // Player did not enter a number.
+        System.out.println("Try Again. Please enter a number.");
+      }
+      if (playersChoiceInt == 1) {
         // Update to use shares from Stock class if 
         gameFunction.getAccount().updateBalance(2000);
-      } else if (choice == "2") {
+        System.out.println("You sold off some of your stake and made a profit! (+$2000)");
+      } else if (playersChoiceInt == 2) {
         gameFunction.getAccount().updateBalance(-2000);
+        System.out.println("You bought more shares of the stock, hoping it will continue to rise. (-$2000)");
       }
     }
   }

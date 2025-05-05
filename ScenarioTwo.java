@@ -5,16 +5,17 @@ import java.util.Scanner;
 
 public class ScenarioTwo {
     
-    private Scanner in = new Scanner(System.in);
     Random rand = new Random();
-    int randomNumber = rand.nextInt(4) + 1;
+    int randomNumber = rand.nextInt(3) + 1;
 
+    private Scanner scanner;
     private GameFunctions gameFunction;
     private Account account;
     private List<Stock> stockPortfolio;
     private Employees employees;
 
-    public ScenarioTwo(GameFunctions gameFunction) {
+    public ScenarioTwo(GameFunctions gameFunction, Scanner scanner) {
+        this.scanner = scanner;
         this.gameFunction = gameFunction;
         this.employees = gameFunction.getEmployees();
         this.account = gameFunction.getAccount();
@@ -76,7 +77,7 @@ public class ScenarioTwo {
     public void optionTwo() {
         System.out.println("Surprise!\n You found a wallet on the ground, it had $500 in it!" + 
                             "Type 1 to pick it up and keep the money\n or 2 to bring it to the police.\n");
-        String playersChoice = in.next();
+        String playersChoice = scanner.next();
         int playersChoiceInt = -1;
 
         while (playersChoiceInt != 1 && playersChoiceInt != 2) {
@@ -109,7 +110,7 @@ public class ScenarioTwo {
         System.out.println("Your employees are asking you, their boss to go out with them " +
                             "for a team-building event and drinks." +
                             "Type 1 to join them or 2 to decline the invitation.\n");
-        String playersChoice = in.next();
+        String playersChoice = scanner.next();
         int playersChoiceInt = -1;
 
         while (playersChoiceInt != 1 && playersChoiceInt != 2) {
@@ -145,7 +146,7 @@ public class ScenarioTwo {
     public void optionFour() {
         System.out.println("A homeless man is asking you for money!" +
                             "Type 1 to give him $100 or 2 to ignore him.\n");
-        String playersChoice = in.next();
+        String playersChoice = scanner.next();
         int playersChoiceInt = -1;
 
         while (playersChoiceInt != 1 && playersChoiceInt != 2) {
