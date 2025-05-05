@@ -209,8 +209,8 @@ public class GameFunctions {
             double cost = chosenStock.getValue() * shares;
     
             if (account.getBalance() >= cost) {
-                account.updateBalance(cost);
-                chosenStock.buyShares(shares);
+                double accountCost = chosenStock.buyShares(shares);
+                account.updateBalance(-1*accountCost);
                 if (!portfolio.contains(chosenStock)) {
                     portfolio.add(chosenStock);
                 }
@@ -218,6 +218,39 @@ public class GameFunctions {
             } else {
                 System.out.println("Not enough balance to complete the purchase.");
             }
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input. Purchase cancelled.");
+        }
+    }
+
+    public void sellShares(List<Stock> portfolio, List<Stock> market, Account account, Scanner scanner) {
+        System.out.println("Available stocks to sell:");
+        for (int i = 0; i < portfolio.size(); i++) {
+            System.out.print((i + 1) + ". ");
+            portfolio.get(i).displayStock();
+        }
+    
+        System.out.print("Enter the number of the stock to sell: ");
+        try {
+            int stockIndex = Integer.parseInt(scanner.nextLine()) - 1;
+            if (stockIndex < 0 || stockIndex >= market.size()) {
+                System.out.println("Invalid stock number.");
+                return;
+            }
+    
+            Stock chosenStock = portfolio.get(stockIndex);
+            System.out.print("Enter number of shares to sell: ");
+            double shares = Double.parseDouble(scanner.nextLine());
+
+            if (shares <= chosenStock.getSharesOwned()) {
+                double cost = chosenStock.getValue() * shares;
+                account.updateBalance(chosenStock.sellShares(shares));
+            } else {
+                System.out.println("Not enough shares to sell.");
+                return;
+            }
+            System.out.println("Sold " + shares + " shares of " + chosenStock.getCompanyName());
+            
         } catch (NumberFormatException e) {
             System.out.println("Invalid input. Purchase cancelled.");
         }
@@ -333,12 +366,15 @@ public class GameFunctions {
         if (scanner.hasNextLine()) {
             scanner.nextLine(); // Flush the buffer BEFORE asking the first month input
         }
-        System.out.print("Enter your choice, invalid input will skip: (buy/hire/skip/stats): ");
+        System.out.print("Enter your choice, invalid input will skip: (buy/sell/hire/skip/stats): ");
         String choice = scanner.nextLine().trim().toLowerCase();
 
         switch (choice) {
             case "buy":
                 buyShares(portfolio, market, account, scanner);
+                break;
+            case "sell":
+                sellShares(portfolio, market, account, scanner);
                 break;
             case "hire":
                 System.out.print("How many employees do you want to hire? ($50/each): ");
