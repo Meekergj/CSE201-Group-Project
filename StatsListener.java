@@ -1,5 +1,15 @@
 
 import java.util.Scanner;
+/**
+ * We didn't end up using this class in the final implementation, but it was intended to
+ * provide a way for players to view their stats at any time during the game.
+ * Class: StatsListener
+ * Author: Braden Gaerke
+ * Version: 1.0
+ * Course: CSE 201 Spring 2025
+ * Written: 5/04/2025
+ *
+ */
 
 public class StatsListener extends Thread {
     private GameFunctions gameFunctions;
@@ -10,6 +20,7 @@ public class StatsListener extends Thread {
         this.scanner = scanner;
     }
 
+    // Runs the multithread listener
     @Override
     public void run() {
         while (true) {
@@ -25,7 +36,7 @@ public class StatsListener extends Thread {
             }
         }
     }
-
+    // What would happen after clicking S
     public void displayStats() {
         System.out.println("\n=== Player Stats ===");
         System.out.println("Player Name: " + gameFunctions.getAccount().getName());

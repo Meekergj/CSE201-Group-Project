@@ -4,11 +4,11 @@ import java.util.Scanner;
 
 /**
  * Class: ScenarioFour
- * @author: Andrew Finkelmeier
- * @version: 1.0
+ * Author: Andrew Finkelmeier
+ * Version: 1.0
  * Course: CSE 201 Spring 2025
  * Written: 4/24/2025
- * 
+ *
  * Purpose: Provides the methods which will be randomly selected at the beginning of the fourth scenario. 
  */
 public class ScenarioFour {
@@ -21,14 +21,24 @@ public class ScenarioFour {
     private Employees employees;
     private Scanner scanner;
 
-  public ScenarioFour(GameFunctions gameFunction, Scanner scanner) {
-    this.scanner = scanner;
-    this.gameFunction = gameFunction;
-    this.employees = gameFunction.getEmployees();
-    this.account = gameFunction.getAccount();
-    this.stockPortfolio = gameFunction.getPortfolio();
-  }
+    /**
+     * Constructor for ScenarioFour.
+     * 
+     * @param gameFunction Reference to the main GameFunctions object.
+     * @param scanner      Scanner object for reading player input.
+     */
+    public ScenarioFour(GameFunctions gameFunction, Scanner scanner) {
+        this.scanner = scanner;
+        this.gameFunction = gameFunction;
+        this.employees = gameFunction.getEmployees();
+        this.account = gameFunction.getAccount();
+        this.stockPortfolio = gameFunction.getPortfolio();
+    }
 
+    /**
+     * Begins the fourth scenario by randomly selecting one of three events:
+     * breakup, market collapse, or mercenaries.
+     */
     public void startScenarioFour() {
         switch (randomNumber) {
             case 1 -> {
@@ -38,35 +48,36 @@ public class ScenarioFour {
             case 2 -> {
                 System.out.println("Quarter Four: A different path awaits you!");
                 marketCollapseStart();
-                // Logic for another option can be added here
             }
             case 3 -> {
                 System.out.println("Quarter Four: A surprise event occurs!");
                 rivalMercenariesStart();
-                // Logic for a surprise event can be added here
             }
             default -> System.out.println("Unexpected scenario number.");
         }
-
-        // Add dialogue or logic for the chosen scenario here, or starting the next
-        // room or quarter in the game.
-
     }
 
+    /**
+     * Starts the girlfriend breakup scenario.
+     * Prompts player to choose how to react emotionally and financially.
+     */
     public void girlfriendBreakupStart() {
         System.out.println("Your girlfriend dumped you out of nowhere and you're pretty maaaaaddd.");
         System.out.println("Type 1 to crashout on your employees or 2 to impulse buy a boat: ");
         girlfriendBreakup();
     }
-    
+
+    /**
+     * Handles user decision logic for the girlfriend breakup scenario.
+     */
     public void girlfriendBreakup() {
         String choice = scanner.nextLine();
 
         if(choice.equals("1")) {
-            gameFunction.getEmployees().changeMorale(-10); //decreases employee morale by 10
+            gameFunction.getEmployees().changeMorale(-10);
         }
         else if(choice.equals("2")) {
-            gameFunction.getAccount().updateBalance(-1000); //withdraws all money from account
+            gameFunction.getAccount().updateBalance(-1000);
         }
         else {
             System.out.println("You're too distraught to do anything else, choose again: ");
@@ -74,25 +85,32 @@ public class ScenarioFour {
         }
     }
 
+    /**
+     * Starts the market collapse scenario.
+     * Offers player a decision between liquidating or holding their assets.
+     */
     public void marketCollapseStart() {
         System.out.println("The stock market is on fire! This could be the Great Incineration they've talked about!");
         System.out.println("Type 1 to liquidate everything, fire all employees, and take what you can or 2 to stick with the program: ");
         marketCollapse();
     }
 
+    /**
+     * Handles user decision logic for the market collapse scenario.
+     */
     public void marketCollapse() {
         String choice = scanner.nextLine();
 
         if(choice.equals("1")) {
-            gameFunction.getEmployees().setEmployeeCount(0); //fires all employees
-            gameFunction.getEmployees().changeMorale(0); //decreases employee morale by 10
+            gameFunction.getEmployees().setEmployeeCount(0);
+            gameFunction.getEmployees().changeMorale(0);
             for (Stock s : stockPortfolio) {
-                s.sellShares(s.getSharesOwned()); //deactivates all stocks in the list
+                s.sellShares(s.getSharesOwned());
             }
             gameFunction.gameCommence();
         }
         else if(choice.equals("2")) {
-            gameFunction.startCollapse(); //separate method that decreases stock value at beginning of each month
+            gameFunction.startCollapse();
         }
         else {
             System.out.println("Is it hot in here to anyone else? I can't think straight. CHOOSE AGAIN: ");
@@ -100,24 +118,31 @@ public class ScenarioFour {
         }
     }
 
+    /**
+     * Starts the rival mercenaries scenario.
+     * Player chooses between evacuating staff or confronting the threat.
+     */
     public void rivalMercenariesStart() {
         System.out.println("A rival stock investor sent some unwanted company to sabotage you.");
         System.out.println("Type 1 to escort your employees out safely or 2 to stand your ground and fight: ");
         rivalMercenaries();
     }
 
+    /**
+     * Handles user decision logic for the rival mercenaries scenario.
+     */
     public void rivalMercenaries() {
         String choice = scanner.nextLine();
 
         if(choice.equals("1")) {
-            gameFunction.getEmployees().changeMorale(2.5); //fires all employees
+            gameFunction.getEmployees().changeMorale(2.5);
 
             for(int i = 0; i < 3; i++) {
-                gameFunction.deactivateStock(i); //deactivates first 3 stocks in the list
+                gameFunction.deactivateStock(i);
             }
         }
         else if(choice.equals("2")) {
-            gameFunction.getAccount().updateBalance(-750); //alt method that withdraws all money from account
+            gameFunction.getAccount().updateBalance(-750);
         }
         else {
             System.out.println("You really feel the need to be a hero here, choose again: ");
