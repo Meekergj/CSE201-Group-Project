@@ -99,23 +99,33 @@ public class ScenarioFour {
      * Handles user decision logic for the market collapse scenario.
      */
     public void marketCollapse() {
-        String choice = scanner.nextLine();
-
-        if(choice.equals("1")) {
+        String choice = scanner.next();
+        int playersChoiceInt = -1;
+    
+        while (playersChoiceInt != 1 && playersChoiceInt != 2) {
+          try {
+            playersChoiceInt = Integer.parseInt(choice);
+          } catch (NumberFormatException e) {
+            System.out.println("Try Again. Please enter a number.");
+          }
+      switch (playersChoiceInt) {
+        case 1 -> {
             gameFunction.getEmployees().setEmployeeCount(0);
             gameFunction.getEmployees().changeMorale(0);
             for (Stock s : stockPortfolio) {
                 s.sellShares(s.getSharesOwned());
             }
-            gameFunction.gameCommence();
+            System.out.println("You liquidated all your assets and fired all your employees. (-$5000)");
+            gameFunction.getAccount().updateBalance(-5000);
         }
-        else if(choice.equals("2")) {
+        case 2 -> {
             gameFunction.startCollapse();
+            System.out.println("You chose to hold your assets and ride out the storm. (-$2000)");
+            gameFunction.getAccount().updateBalance(-2000);
         }
-        else {
-            System.out.println("Is it hot in here to anyone else? I can't think straight. CHOOSE AGAIN: ");
-            marketCollapse();
-        }
+        default -> System.out.println("Is it hot in here to anyone else? I can't think straight.");
+      }
+    }
     }
 
     /**
@@ -132,21 +142,30 @@ public class ScenarioFour {
      * Handles user decision logic for the rival mercenaries scenario.
      */
     public void rivalMercenaries() {
-        String choice = scanner.nextLine();
-
-        if(choice.equals("1")) {
-            gameFunction.getEmployees().changeMorale(2.5);
-
-            for(int i = 0; i < 3; i++) {
-                gameFunction.deactivateStock(i);
+        String choice = scanner.next();
+        int playersChoiceInt = -1;
+    
+        while (playersChoiceInt != 1 && playersChoiceInt != 2) {
+          try {
+            playersChoiceInt = Integer.parseInt(choice);
+          } catch (NumberFormatException e) {
+            System.out.println("Try Again. Please enter a number.");
+          }
+          switch (playersChoiceInt) {
+            case 1 -> {
+                gameFunction.getEmployees().changeMorale(2.5);
+                System.out.println("You successfully evacuated your employees and avoided any harm.");
+                System.out.println("But they took some of your stocks");
+                for (int i = 0; i < 3; i++) {
+                    gameFunction.deactivateStock(i);
+                }
             }
-        }
-        else if(choice.equals("2")) {
-            gameFunction.getAccount().updateBalance(-750);
-        }
-        else {
-            System.out.println("You really feel the need to be a hero here, choose again: ");
-            rivalMercenaries();
+            case 2 -> {
+                gameFunction.getAccount().updateBalance(-750);
+                System.out.println("You bravely confronted the mercenaries, but it cost you dearly.");
+            } 
+            default -> System.out.println("You really feel the need to be a hero here");
+          }
         }
     }
 }
