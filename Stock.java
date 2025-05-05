@@ -1,3 +1,5 @@
+import java.util.Random;
+
 /**
  * Class: Stock
  * @author: Gavin Meeker
@@ -12,11 +14,17 @@ public class Stock {
     private double value;
     private double changeInValue;
     private double sharesOwned;
+    private double volatility;
+    private double baseline;
+
+    Random r = new Random();
 
     public Stock(String companyName, double initialValue) {
         this.companyName = companyName;
         this.value = initialValue;
         this.sharesOwned = 0;
+        this.volatility = r.nextDouble(5 - 0.5) + 0.5;
+        this.baseline = r.nextDouble(5);
     }
 
     public Stock(String companyName, double initialValue, double changeInValue, double sharesOwned) {
@@ -24,6 +32,8 @@ public class Stock {
         this.value = initialValue;
         this.sharesOwned = sharesOwned;
         this.changeInValue = changeInValue;
+        this.volatility = r.nextDouble(10 - 0) + 0;
+        this.baseline = r.nextDouble(5 + 5) - 5;
     }
 
     public String getCompanyName() {
@@ -37,6 +47,11 @@ public class Stock {
     public double getChangeInValue() {
         return changeInValue;
     }
+    
+    public void setChangeInValue(double changeInValue) {
+        this.changeInValue = changeInValue;
+    }  
+    
 
     public double getSharesOwned() {
         return sharesOwned;
@@ -81,5 +96,20 @@ public class Stock {
         return revenue;
     }
 
+    /*
+     * 
+     */
+    public double tickFowardValue() {
+        Random r1 = new Random();
+        Random r2 = new Random();
+        Random r3 = new Random();
+        double volRand = r1.nextDouble();
+        double baseRand = r2.nextDouble();
+        double angRand = r3.nextDouble(Math.PI * 2);
+        
+        double newValue = (volatility * volRand * Math.sin(angRand)) + (baseline * baseRand) + volatility;
+        
+        return newValue;
+    }
 
 }

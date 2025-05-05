@@ -27,31 +27,26 @@ public class ScenarioTwo {
         switch (randomNumber) {
             case 1 -> {
                 System.out.println("Quarter Two: You have a choice to make!");
-                optionOneStart();
+                optionTwo();
             }
             case 2 -> {
                 System.out.println("Quarter Two: A different path awaits you!");
-                optionTwo();
+                optionThree();
                 // Logic for another option can be added here
             }
             case 3 -> {
                 System.out.println("Quarter Two: A surprise event occurs!");
-                optionThree();
-                // Logic for a surprise event can be added here
-            }
-            case 4 -> {
-                System.out.println("Quarter Two: A new opportunity arises!");
                 optionFour();
-                // Logic for a new opportunity can be added here
+                // Logic for a surprise event can be added here
             }
             default -> System.out.println("Unexpected scenario number.");
         }
 
         // Add dialogue or logic for the chosen scenario here, or starting the next
         // room or quarter in the game.
-
     }
 
+    /* 
     public void optionOneStart() {
         System.out.println("A major competitor has just announced a new product that could threaten your business.");
         System.out.println("Type 1 to launch a counter-campaign or 2 to ignore it and focus on your current strategy: ");
@@ -63,11 +58,11 @@ public class ScenarioTwo {
         
         switch (choice) {
             case "1" -> {
-                employees.changeMoral(5);
+                employees.changeMorale(5);
                 System.out.println("Your employees are motivated by the challenge!");
             }
             case "2" -> {
-                employees.changeMoral(5);
+                employees.changeMorale(5);
                 System.out.println("Your employees feel demotivated by the lack of action.");
             }
             default -> {
@@ -76,6 +71,7 @@ public class ScenarioTwo {
             }
         }
     }
+    */
 
     public void optionTwo() {
         System.out.println("Surprise!\n You found a wallet on the ground, it had $500 in it!" + 
@@ -98,7 +94,7 @@ public class ScenarioTwo {
                 }
                 case 2 -> {
                     System.out.println("You chose to bring the wallet to the police. Your honesty is commendable, but you missed out on $500.");
-                    gameFunction.getEmployees().changeMoral(5);
+                    gameFunction.getEmployees().changeMorale(5);
                     // Logic for risky investment scenario can be added here
                 }
                 default -> {
@@ -127,14 +123,14 @@ public class ScenarioTwo {
                 case 1 -> {
                     System.out.println("You chose to join your employees for a team-building event. " +
                             "Your employees feel appreciated and their morale increases!");
-                    gameFunction.getEmployees().changeMoral(10);
+                    gameFunction.getEmployees().changeMorale(10);
                     gameFunction.getAccount().updateBalance(-100); // Assuming a cost for the event
                     // Logic for safe investment scenario can be added here
                 }
                 case 2 -> {
                     System.out.println("You chose to decline the invitation. " +
                             "Your employees feel disappointed and their morale decreases.");
-                    gameFunction.getEmployees().changeMoral(-10);
+                    gameFunction.getEmployees().changeMorale(-10);
 
                     // Logic for risky investment scenario can be added here
                 }
@@ -167,7 +163,7 @@ public class ScenarioTwo {
                 }
                 case 2 -> {
                     System.out.println("You chose to ignore him. Your employee saw and thinks less of you.");
-                    gameFunction.getEmployees().changeMoral(-5);
+                    gameFunction.getEmployees().changeMorale(-5);
                     // Logic for risky investment scenario can be added here
                 }
                 default -> {

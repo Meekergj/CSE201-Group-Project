@@ -13,11 +13,13 @@ import java.util.Scanner;
  */
 public class GameFunctions {
 
-    private Account account = new Account(); // Default account with initial balance
-    private Employees employees = new Employees(); // Default employees
-    private List<Stock> portfolio = new ArrayList<>(); // Default empty portfolio
+    private static Account account; // Default account with initial balance
+    private static Employees employees = new Employees(); // Default employees
+    private static List<Stock> portfolio = new ArrayList<>(); // Default empty portfolio
+    private static List<Stock> market = new ArrayList<>(); // Default empty market
     private int currentQuarter;
     private boolean gameOver = false;
+    private boolean isCollapse = false; // Indicates if a market collapse has occurred
 
     // Do we need setters for these 
     public GameFunctions(Account account, Employees employees, List<Stock> portfolio) {
@@ -37,7 +39,7 @@ public class GameFunctions {
         System.out.println("Player Name: " + account.getName());
         System.out.println("Account Balance: $" + account.getBalance());
         System.out.println("Current Quarter: " + currentQuarter);
-        System.out.println("Employee Morale: " + employees.getMoral());
+        System.out.println("Employee Morale: " + employees.getMorale());
         System.out.println("Employee Productivity: " + employees.getProductivity());
         System.out.println("Stock Portfolio:");
     
@@ -79,7 +81,7 @@ public class GameFunctions {
     /**
      * Gives the player an introduction to the game setting.
      */
-    public void gameIntro() {
+    public void gameIntro(Scanner scanner) {
         System.out.println("Initializing game...");
         System.out.println("The Wolf of Wool Street");
         System.out.println("-------------------------------------------" + "\n");
@@ -96,55 +98,51 @@ public class GameFunctions {
         System.out.println("Right, you forgot to mention your name...");
 
         System.out.println("-------------------------------------------" + "\n");
+
+        setPlayerName(scanner);
         
-        setPlayerName();
     }
 
     /**
      * Sets the player's name when prompted.
      */
-    private String playerName;
 
-    public void setPlayerName() {
-        Scanner playerScanner = new Scanner(System.in);
-
+    public void setPlayerName(Scanner scanner) {
         System.out.print("Enter your name: ");
-        this.playerName = playerScanner.nextLine();
+        String playerName = scanner.nextLine().trim();
 
-        System.out.println("Great. Let's get you to the top " + playerName + "!");
-        Account newAccount = new Account(1000, playerName);
+        Account newAccount = new Account(10000, playerName);
         this.setAccount(newAccount);
+        System.out.println("Great. Let's get you to the top " + this.getAccount().getName() + "!");
+
     }
 
     public void inbetweenFirstScenario() {
         System.out.println("Before we get started, let's go over some basics.");
-        System.out.println("You start with a balance of $1000.00 and your goal is to increase your wealth by making smart investments.");
+        System.out.println("You start with a balance of $" + account.getBalance() + " and your goal is to increase your wealth by making smart investments.");
         System.out.println("Each quarter, you'll face different scenarios that will test your investment skills.");
         System.out.println("Make choices wisely, as they will affect your balance and the outcome of the game.");
-        System.out.println("Remember, you can go bankrupt if your balance drops to $0.00 or below.");
-        System.out.println("Good luck, " + this.getAccount().getName() + "! Let's get started!");
+        System.out.println("Remember, you can go bankrupt if your balance drops to .00 or below.");
+        System.out.println("Good luck, " + account.getName() + "! Let's get started!");
     }
 
     /**
      * Asks the player if they are ready to begin and calls the gameCommence method if yes.
      * If no, the game starts anyways because that's just Wool Street for you.
      */
-    public void startGame() {
-        System.out.println("Ready to begin? (yes/no)");
-
-        Scanner scanner = new Scanner(System.in);
-        String response = scanner.nextLine().toLowerCase();
-
-        if(response.equals("yes")) {
-            System.out.println("Great! Let's get you started on your journey to the top of Wool Street!");
-            System.out.println("Onto our first quarter...");
-
-        } else if(response.equals("no")) {
-            System.out.println("Who put you in charge? Wool Street doesn't wait for nobahhdy!");
-            gameCommence();
-        } else {
-            System.out.println("What the flock are you even saying?? I have no idea what to do with that information...");
-            gameCommence();
+    public void startGame(Scanner scanner) {
+        while (true) {
+            System.out.println("Ready to begin? (yes/no)");
+            String response = scanner.nextLine().toLowerCase();
+            if (response.equals("yes")) {
+                System.out.println("Great! Let's get you started...");
+                break;
+            } else if (response.equals("no")) {
+                System.out.println("Who put you in charge? Wool Street doesn't wait for nobahhdy!");
+                break;
+            } else {
+                System.out.println("What the flock are you even saying??");
+            }
         }
     }
 
@@ -157,62 +155,185 @@ public class GameFunctions {
         
     }
 
+    public void deactivateStock(int index) {
+        portfolio.remove(index);
+    }
 
+    public void startCollapse() {
+        System.out.println("Market collapse imminent!");
+        isCollapse = true;
+    }
+
+    public void buyShares(List<Stock> portfolio, List<Stock> market, Account account, Scanner scanner) {
+        System.out.println("Available stocks to buy:");
+        for (int i = 0; i < market.size(); i++) {
+            System.out.print((i + 1) + ". ");
+            market.get(i).displayStock();
+        }
+    
+        System.out.print("Enter the number of the stock to buy: ");
+        try {
+            int stockIndex = Integer.parseInt(scanner.nextLine()) - 1;
+            if (stockIndex < 0 || stockIndex >= market.size()) {
+                System.out.println("Invalid stock number.");
+                return;
+            }
+    
+            Stock chosenStock = market.get(stockIndex);
+            System.out.print("Enter number of shares to buy: ");
+            double shares = Double.parseDouble(scanner.nextLine());
+            double cost = chosenStock.getValue() * shares;
+    
+            if (account.getBalance() >= cost) {
+                account.updateBalance(cost);
+                chosenStock.buyShares(shares);
+                if (!portfolio.contains(chosenStock)) {
+                    portfolio.add(chosenStock);
+                }
+                System.out.println("Purchased " + shares + " shares of " + chosenStock.getCompanyName());
+            } else {
+                System.out.println("Not enough balance to complete the purchase.");
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input. Purchase cancelled.");
+        }
+    }
+    
+    
+
+    public void runMonthlyActivities(List<Stock> market, Employees employees, Account account, List<Stock> portfolio, Scanner scanner) {
+        boolean isCollapse = false;
+        int currentQuarter = getCurrentQuarter();
+    
+        // === SCENARIO: Run once per quarter ===
+        System.out.println("[Quarter " + currentQuarter + " Scenario]");
+        switch (currentQuarter) {
+            case 1 -> {
+                ScenarioOne scenarioOne = new ScenarioOne(this);
+                scenarioOne.startScenarioOne();
+            }
+            case 2 -> {
+                ScenarioTwo scenarioTwo = new ScenarioTwo(this);
+                scenarioTwo.startScenarioTwo();
+            }
+            case 3 -> {
+                ScenarioThree scenarioThree = new ScenarioThree(this);
+                scenarioThree.startScenarioThree();
+            }
+            case 4 -> {
+                ScenarioFour scenarioFour = new ScenarioFour(this);
+                scenarioFour.startScenarioFour();
+            }
+        }
+    
+        // === Monthly loop ===
+        for (int month = 1; month <= 4; month++) {
+            System.out.println("\nMonth " + month + " of Quarter " + currentQuarter);
+            System.out.println("You can buy shares, hire employees, or manage your portfolio.");
+            System.out.print("Enter your choice, invalid input will skip: (buy/hire/skip): ");
+    
+            String choice = scanner.nextLine().trim().toLowerCase();
+    
+            // === TICK: Update all stock values ===
+            System.out.println("\n[ Stock market update... ]");
+            for (Stock stock : market) {
+                double oldValue = stock.getValue();
+                double newValue = stock.tickFowardValue();
+    
+                // If there's a collapse in this quarter, simulate the drop
+                if (isCollapse) {
+                    newValue *= 0.6; // Drop by 40%
+                    System.out.println("Market crash! " + stock.getCompanyName() + " drops to $" + String.format("%.2f", newValue));
+                }
+    
+                stock.setValue(newValue);
+                stock.setChangeInValue(stock.calculateChangeInValue(oldValue, newValue));
+            }
+    
+        switch (choice) {
+            case "buy":
+                buyShares(portfolio, market, account, scanner);
+                break;
+            case "hire":
+                System.out.print("How many employees do you want to hire? ");
+                try {
+                    int count = Integer.parseInt(scanner.nextLine());
+                    double cost = employees.hireEmployees(count);
+                    if (account.getBalance() >= cost) {
+                        account.updateBalance(cost);
+                        System.out.println("Hired " + count + " employees for $" + cost);
+                    } else {
+                        System.out.println("Not enough funds to hire that many employees.");
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid number format. Skipping.");
+                }
+                break;
+            case "skip":
+                System.out.println("Skipping this month...");
+                break;
+            default:
+                System.out.println("Invalid choice. Skipping this month...");
+                break;
+            }
+        }
+    }
+    
+    public void displayMarket(List<Stock> market) {
+        System.out.println("\n=== Market Overview ===");
+        for (Stock stock : market) {
+            stock.displayStock();
+        }
+    }
+    
+    
 
     public boolean isGameOver() {
         gameOver = currentQuarter > 4 || account.getBalance() <= 0; // Check if the game is over
         return gameOver;
     }
 
+
+
     public static void main(String[] args) {
-        GameFunctions newGame = new GameFunctions();
+        Scanner scanner = new Scanner(System.in); // ← SINGLE SHARED SCANNER
+    
+        market.add(new Stock("Sahara", 9));
+        market.add(new Stock("Gogle", 2));
+        market.add(new Stock("Jim Bortons", 6));
+        market.add(new Stock("Blue Skies", 5));
+        market.add(new Stock("Null Co", 5));
+        market.add(new Stock("Bahthesda", 8));
+        market.add(new Stock("Shallow Mind", 4));
+        market.add(new Stock("Pear", 4));
+        market.add(new Stock("Unusual Oil", 7));
+    
+        GameFunctions newGame = new GameFunctions(account, employees, portfolio);
     
         StatsListener statsListener = new StatsListener(newGame);
-        
-        statsListener.setDaemon(true); // Set the stats listener as a daemon thread
-        statsListener.start(); // Start the stats listener thread
-        
-        newGame.gameIntro();
+        statsListener.setDaemon(true);
+        statsListener.start();
+    
+        newGame.gameIntro(scanner);
         newGame.inbetweenFirstScenario();
-        newGame.startGame();
-
-        newGame.increaseQuarter();
-
-        while(newGame.isGameOver() != true) {
-            switch (newGame.getCurrentQuarter()) {
-                case 1 -> {
-                    ScenarioOne scenarioOne = new ScenarioOne();
-                    scenarioOne.startScenarioOne();
-                    newGame.increaseQuarter();
-                }
-                case 2 -> {
-                    ScenarioTwo scenarioTwo = new ScenarioTwo(newGame);
-                    scenarioTwo.startScenarioTwo();
-                    newGame.increaseQuarter();
-                }
-                case 3 -> {
-                    ScenarioThree scenarioThree = new ScenarioThree(newGame);
-                    scenarioThree.startScenarioThree();
-                    newGame.increaseQuarter();
-                }
-                case 4 -> {
-                    ScenarioFour scenarioFour = new ScenarioFour(newGame);
-                    scenarioFour.startScenarioFour();
-                    newGame.increaseQuarter();
-                }
-            }
-        }
-        if (newGame.isGameOver()) {
-            System.out.println("Game Over! You have reached the end of your journey on Wool Street.");
-        }
-        if(newGame.getAccount().getBalance() <= 0) {
-            System.out.println("You went bankrupt! Guess you were a sheep in wolf's clothing instead!");
-        } else {
-            System.out.println("Congratulations " + newGame.getAccount().getName() + "! You made it to the top of Wool Street with " + newGame.getAccount().getBalance());
+        newGame.startGame(scanner);
+    
+    
+        while (!newGame.isGameOver()) {
+            newGame.runMonthlyActivities(market, employees, account, portfolio, scanner);
+            account.updateBalance(employees.setTotalProduction());
+            
+            newGame.increaseQuarter();
         }
     
-
+        if (account.getBalance() <= 0) {
+            System.out.println("You went bankrupt!");
+        } else {
+            System.out.println("Congrats! Final Balance: $" + account.getBalance());
+        }
+    
+        scanner.close(); // Always close it at the end
     }
-}
+    }
 
 

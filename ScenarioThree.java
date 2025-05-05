@@ -58,12 +58,12 @@ public class ScenarioThree {
 
     while (choice != "1" || choice != "2") {
       if (choice == "1") { // Pay for health
-        System.out.println("Your employee made a swift recovery! (-$1000)");
-        gameFunction.getAccount().updateBalance(-1000);
+        System.out.println("Your employee made a swift recovery! (-$500)");
+        gameFunction.getAccount().updateBalance(-500);
       } else if (choice == "2") {
 
         // Add an employee to the array
-        // and make him ass
+        gameFunction.getEmployees().changeProductivity(-30);
 
       } else {
         System.out.println("Is it hot in here to anyone else? I can't think straight. CHOOSE AGAIN: ");
@@ -88,17 +88,14 @@ public class ScenarioThree {
 
     while (choice != "1" || choice != "2") {
       if (choice == "1") {
-        System.out.println("You pay the mother enough money to cover the");
-        System.out.println("damages and keep quiet. (-$2000)");
+        System.out.println("You pay the mother enough money to cover the ");
+        System.out.print("damages and keep quiet. (-$2000)");
 
-        gameFunction.getAccount().updateBalance(-2000);
+        gameFunction.getAccount().updateBalance(2000);
       } else if (choice == "2") {
         System.out.println("There was a witness at the scene and word got");
-        System.out.println("around to your employees.");
-        gameFunction.getEmployees().changeMoral(-10); // Decrease employee morale by 10
-      } else {
-        System.out.println("Is it hot in here to anyone else? I can't think straight. CHOOSE AGAIN: ");
-        carCrash();
+        System.out.print("around to your employees.");
+        gameFunction.getEmployees().changeProductivity(-10);
       }
     }
   }
@@ -120,9 +117,6 @@ public class ScenarioThree {
         gameFunction.getAccount().updateBalance(2000);
       } else if (choice == "2") {
         gameFunction.getAccount().updateBalance(-2000);
-      } else {
-        System.out.println("Is it hot in here to anyone else? I can't think straight. CHOOSE AGAIN: ");
-        bullishTrend();
       }
     }
   }

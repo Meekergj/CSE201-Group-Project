@@ -21,12 +21,12 @@ public class ScenarioFour {
     private List<Stock> stockPortfolio;
     private Employees employees;
 
-    public ScenarioFour(GameFunctions gameFunction) {
-        this.gameFunction = gameFunction;
-        this.employees = gameFunction.getEmployees();
-        this.account = gameFunction.getAccount();
-        this.stockPortfolio = gameFunction.getPortfolio();
-    }
+  public ScenarioFour(GameFunctions gameFunction) {
+    this.gameFunction = gameFunction;
+    this.employees = gameFunction.getEmployees();
+    this.account = gameFunction.getAccount();
+    this.stockPortfolio = gameFunction.getPortfolio();
+  }
 
     public void startScenarioFour() {
         switch (randomNumber) {
@@ -62,8 +62,7 @@ public class ScenarioFour {
         String choice = scan.nextLine();
 
         if(choice.equals("1")) {
-            
-            gameFunction.getEmployees().changeMoral(-10); //decreases employee morale by 10
+            gameFunction.getEmployees().changeMorale(-10); //decreases employee morale by 10
         }
         else if(choice.equals("2")) {
             gameFunction.getAccount().updateBalance(-1000); //withdraws all money from account
@@ -75,7 +74,7 @@ public class ScenarioFour {
     }
 
     public void marketCollapseStart() {
-        System.out.println("The stalk market is on fire! This could be the Great Incineration they've talked about!");
+        System.out.println("The stock market is on fire! This could be the Great Incineration they've talked about!");
         System.out.println("Type 1 to liquidate everything, fire all employees, and take what you can or 2 to stick with the program: ");
         marketCollapse();
     }
@@ -85,15 +84,14 @@ public class ScenarioFour {
 
         if(choice.equals("1")) {
             gameFunction.getEmployees().setEmployeeCount(0); //fires all employees
-            gameFunction.getEmployees().setMoral(0); //decreases employee morale by 10
+            gameFunction.getEmployees().changeMorale(0); //decreases employee morale by 10
             for (Stock s : stockPortfolio) {
                 s.sellShares(s.getSharesOwned()); //deactivates all stocks in the list
             }
             gameFunction.gameCommence();
         }
         else if(choice.equals("2")) {
-             //separate method that decreases stock value at beginning of each month
-             System.out.println("You chose to stick with the program. Let's hope for the best!");
+            gameFunction.startCollapse(); //separate method that decreases stock value at beginning of each month
         }
         else {
             System.out.println("Is it hot in here to anyone else? I can't think straight. CHOOSE AGAIN: ");
@@ -110,25 +108,19 @@ public class ScenarioFour {
     public void rivalMercenaries() {
         String choice = scan.nextLine();
 
-        switch (choice) {
-            case "1" -> {
-                gameFunction.getEmployees().changeMoral(5); //They appreciate it 
-                for (int i = 0; i < 3; i++) {
-                    List<Stock> current = gameFunction.getPortfolio(); //deactivates all stocks in the list
-                    if (!current.isEmpty()) {
-                        int randomIndex = rand.nextInt(current.size());
-                        Stock stockToDeactivate = current.get(randomIndex);
-                        stockToDeactivate.setSharesOwned(0); // Deactivates the stock by setting shares owned to 0
-                        System.out.println("Deactivated stock: " + stockToDeactivate.getCompanyName());
-                    }
-                }
-                //deactivates 3 random stocks in the list
+        if(choice.equals("1")) {
+            gameFunction.getEmployees().changeMorale(2.5); //fires all employees
+
+            for(int i = 0; i < 3; i++) {
+                gameFunction.deactivateStock(i); //deactivates first 3 stocks in the list
             }
-            case "2" -> gameFunction.getAccount().updateBalance(-750); //alt method that withdraws all money from account
-            default -> {
-                System.out.println("You really feel the need to be a hero here, choose again: ");
-                rivalMercenaries();
-            }
+        }
+        else if(choice.equals("2")) {
+            gameFunction.getAccount().updateBalance(-750); //alt method that withdraws all money from account
+        }
+        else {
+            System.out.println("You really feel the need to be a hero here, choose again: ");
+            rivalMercenaries();
         }
     }
 }

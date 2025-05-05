@@ -10,22 +10,23 @@
  */
 public class Employees {
     // Attributes
-    private double moral;
+    private double morale;
     private double productivity;
     private int employeeCount = 0; // Optional: if you want to track number of employees
+    private double totalProduction = 0;
 
     // Constructor
     /*
      * 
      */
     public Employees(double moral, double productivity, int employeeCount) {
-        this.moral = moral;
+        this.morale = moral;
         this.productivity = productivity;
         this.employeeCount = employeeCount;
     }
 
     public Employees() {
-        this.moral = 0.0;
+        this.morale = 0.0;
         this.productivity = 0.0;
         this.employeeCount = 0;
     }  
@@ -35,7 +36,7 @@ public class Employees {
      * 
      */
     public double valueOut() {
-        return productivity + moral;
+        return productivity + morale;
     }
 
     /*
@@ -48,16 +49,16 @@ public class Employees {
     /*
      * 
      */
-    public void changeMoral(double change) {
-        this.moral = moral + change;
+    public void changeMorale(double change) {
+        this.morale = morale + change;
     }
 
     // Getters and setters
     /*
      * 
      */
-    public double getMoral() {
-        return moral;
+    public double getMorale() {
+        return morale;
     }
 
     public int getEmployeeCount() {
@@ -71,8 +72,8 @@ public class Employees {
     /*
      * 
      */
-    public void setMoral(double moral) {
-        this.moral = moral;
+    public void setMorale(double morale) {
+        this.morale = morale;
     }
 
     /*
@@ -87,5 +88,26 @@ public class Employees {
      */
     public void setProductivity(double productivity) {
         this.productivity = productivity;
+    }
+
+    public double hireEmployees(int count) {
+        double costPerEmployee = 50.0; 
+        employeeCount += count;
+        productivity += 10 * count;
+        morale += 2.5 * count;
+        setTotalProduction();
+        return count * costPerEmployee;
+    }
+    
+
+    public double setTotalProduction() {
+        totalProduction = productivity * morale;
+        return totalProduction;
+    }
+
+    public void fireEmployees() {
+        productivity = 0;
+        morale = 0;
+        employeeCount = 0;
     }
 }
