@@ -7,7 +7,9 @@ public class ScenarioOne {
     
     public void startScenarioOne() {
         Scanner in = new Scanner(System.in);
-        System.out.println("Welcome! Would you prefer a safe investment or a risky investment?" + "Type 1 for safe, or 2 for risky.");
+        System.out.println("Welcome! \n It is the first quarter of the year, and you have a choice to make!" + 
+                           "Would you prefer a safe investment or a risky investment?" + 
+                           "Type 1 for safe, or 2 for risky.");
         String playersChoice = in.next();
         int playersChoiceInt = -1;
 

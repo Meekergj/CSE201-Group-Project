@@ -32,6 +32,26 @@ public class GameFunctions {
         this.currentQuarter = 0; // Initialize currentQuarter to 0
     }
 
+    public void displayStats() {
+        System.out.println("\n========= GAME STATS =========");
+        System.out.println("Player Name: " + account.getName());
+        System.out.println("Account Balance: $" + account.getBalance());
+        System.out.println("Current Quarter: " + currentQuarter);
+        System.out.println("Employee Morale: " + employees.getMoral());
+        System.out.println("Employee Productivity: " + employees.getProductivity());
+        System.out.println("Stock Portfolio:");
+    
+        if (portfolio.isEmpty()) {
+            System.out.println("  (No stocks owned)");
+        } else {
+            for (Stock stock : portfolio) {
+                System.out.println("  - " + stock.getCompanyName() + " | Shares Owned: " + stock.getSharesOwned() + " | Value: $" + stock.getValue());
+            }
+        }
+        System.out.println("================================\n");
+    }
+    
+
     public void increaseQuarter() {
         this.currentQuarter++;
     }   
@@ -77,6 +97,7 @@ public class GameFunctions {
 
         System.out.println("-------------------------------------------" + "\n");
         
+        setPlayerName();
     }
 
     /**
@@ -146,8 +167,12 @@ public class GameFunctions {
     public static void main(String[] args) {
         GameFunctions newGame = new GameFunctions();
     
+        StatsListener statsListener = new StatsListener(newGame);
+        
+        statsListener.setDaemon(true); // Set the stats listener as a daemon thread
+        statsListener.start(); // Start the stats listener thread
+        
         newGame.gameIntro();
-        newGame.setPlayerName();
         newGame.inbetweenFirstScenario();
         newGame.startGame();
 
@@ -156,7 +181,7 @@ public class GameFunctions {
         while(newGame.isGameOver() != true) {
             switch (newGame.getCurrentQuarter()) {
                 case 1 -> {
-                    ScenarioOne scenarioOne = new ScenarioOne(newGame);
+                    ScenarioOne scenarioOne = new ScenarioOne();
                     scenarioOne.startScenarioOne();
                     newGame.increaseQuarter();
                 }

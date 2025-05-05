@@ -60,6 +60,14 @@ public class Employees {
         return moral;
     }
 
+    public int getEmployeeCount() {
+        return employeeCount;
+    }
+
+    public void setEmployeeCount(int employeeCount) {
+        this.employeeCount = employeeCount;
+    }
+
     /*
      * 
      */

@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -5,6 +6,18 @@ public class ScenarioThree {
 
   Random rand = new Random();
   int randomNumber = rand.nextInt(3) + 1;
+
+  private GameFunctions gameFunction;
+  private Account account;
+  private List<Stock> stockPortfolio;
+  private Employees employees;
+
+  public ScenarioThree(GameFunctions gameFunction) {
+      this.gameFunction = gameFunction;
+      this.employees = gameFunction.getEmployees();
+      this.account = gameFunction.getAccount();
+      this.stockPortfolio = gameFunction.getPortfolio();
+  }
 
   public void startScenarioThree() {
     switch (randomNumber) {
@@ -46,12 +59,15 @@ public class ScenarioThree {
     while (choice != "1" || choice != "2") {
       if (choice == "1") { // Pay for health
         System.out.println("Your employee made a swift recovery! (-$1000)");
-        Account.withdrawMoney(1000);
+        gameFunction.getAccount().updateBalance(-1000);
       } else if (choice == "2") {
 
         // Add an employee to the array
         // and make him ass
 
+      } else {
+        System.out.println("Is it hot in here to anyone else? I can't think straight. CHOOSE AGAIN: ");
+        batemanEvent();
       }
     }
   }
@@ -75,13 +91,14 @@ public class ScenarioThree {
         System.out.println("You pay the mother enough money to cover the");
         System.out.println("damages and keep quiet. (-$2000)");
 
-        Account.withdrawMoney(2000);
+        gameFunction.getAccount().updateBalance(-2000);
       } else if (choice == "2") {
-        Systen.out.println("There was a witness at the scene and word got");
-        Systen.out.println("around to your employees.");
-        for (Employee e : employees) {
-          e.decreaseMorale(4);
-        }
+        System.out.println("There was a witness at the scene and word got");
+        System.out.println("around to your employees.");
+        gameFunction.getEmployees().changeMoral(-10); // Decrease employee morale by 10
+      } else {
+        System.out.println("Is it hot in here to anyone else? I can't think straight. CHOOSE AGAIN: ");
+        carCrash();
       }
     }
   }
@@ -100,9 +117,12 @@ public class ScenarioThree {
     while (choice != "1" || choice != "2") {
       if (choice == "1") {
         // Update to use shares from Stock class if 
-        Account.updateBalance(2000);
+        gameFunction.getAccount().updateBalance(2000);
       } else if (choice == "2") {
-        Account.updateBalance(-2000);
+        gameFunction.getAccount().updateBalance(-2000);
+      } else {
+        System.out.println("Is it hot in here to anyone else? I can't think straight. CHOOSE AGAIN: ");
+        bullishTrend();
       }
     }
   }
