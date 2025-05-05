@@ -12,7 +12,6 @@ import java.util.Scanner;
  * Purpose: Provides the methods which will be randomly selected at the beginning of the fourth scenario. 
  */
 public class ScenarioFour {
-    Scanner scan = new Scanner(System.in);
     Random rand = new Random();
     int randomNumber = rand.nextInt(3) + 1;
 
@@ -20,8 +19,10 @@ public class ScenarioFour {
     private Account account;
     private List<Stock> stockPortfolio;
     private Employees employees;
+    private Scanner scanner;
 
-  public ScenarioFour(GameFunctions gameFunction) {
+  public ScenarioFour(GameFunctions gameFunction, Scanner scanner) {
+    this.scanner = scanner;
     this.gameFunction = gameFunction;
     this.employees = gameFunction.getEmployees();
     this.account = gameFunction.getAccount();
@@ -59,7 +60,7 @@ public class ScenarioFour {
     }
     
     public void girlfriendBreakup() {
-        String choice = scan.nextLine();
+        String choice = scanner.nextLine();
 
         if(choice.equals("1")) {
             gameFunction.getEmployees().changeMorale(-10); //decreases employee morale by 10
@@ -80,7 +81,7 @@ public class ScenarioFour {
     }
 
     public void marketCollapse() {
-        String choice = scan.nextLine();
+        String choice = scanner.nextLine();
 
         if(choice.equals("1")) {
             gameFunction.getEmployees().setEmployeeCount(0); //fires all employees
@@ -106,7 +107,7 @@ public class ScenarioFour {
     }
 
     public void rivalMercenaries() {
-        String choice = scan.nextLine();
+        String choice = scanner.nextLine();
 
         if(choice.equals("1")) {
             gameFunction.getEmployees().changeMorale(2.5); //fires all employees

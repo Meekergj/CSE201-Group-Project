@@ -30,7 +30,7 @@ public class GameFunctions {
     }
 
     public GameFunctions() {
-        this.account.setName("Default Player");
+        this.account = new Account(10000, "Jordan");
         this.currentQuarter = 0; // Initialize currentQuarter to 0
     }
 
@@ -41,7 +41,14 @@ public class GameFunctions {
         System.out.println("Current Quarter: " + currentQuarter);
         System.out.println("Employee Morale: " + employees.getMorale());
         System.out.println("Employee Productivity: " + employees.getProductivity());
-        System.out.println("Stock Portfolio:");
+        if (portfolio.isEmpty()) {
+            System.out.println("Stock Portfolio: No stocks owned");
+        } else {
+            System.out.println("Stock Portfolio:");
+            for (Stock s : portfolio) {
+                s.displayStock();
+            }
+        }
     
         if (portfolio.isEmpty()) {
             System.out.println("  (No stocks owned)");
@@ -70,9 +77,9 @@ public class GameFunctions {
         this.portfolio = portfolio;
         }
 
-        public Account getAccount() { return this.account; }
-        public Employees getEmployees() { return this.employees; }
-        public List<Stock> getPortfolio() { return this.portfolio; }
+        public Account getAccount() { return account; }
+        public Employees getEmployees() { return employees; }
+        public List<Stock> getPortfolio() { return portfolio; }
 
     public int getCurrentQuarter() {
         return currentQuarter;
@@ -94,27 +101,23 @@ public class GameFunctions {
         System.out.println("the penhouse soon.");
         System.out.println("Remember, it's better to be the wolf than to cry wolf. Got it?");
         System.out.println("Oh and when you make it to the top, don't feel bad for your sheeple employees. ");
-        System.out.print("I'd rather be bahhhtty and a millionaire than working a 9-5 at Macdonald's or Shears.");
-        System.out.println("Right, you forgot to mention your name...");
-
-        System.out.println("-------------------------------------------" + "\n");
+        System.out.println("I'd rather be bahhhtty and a millionaire than working a 9-5 at Macdonald's or Shears.");
+        System.out.println("-------------------------------------------");
 
         setPlayerName(scanner);
         
+        System.out.println("Great. Let's get you to the top, " + account.getName() + "!");
     }
 
     /**
      * Sets the player's name when prompted.
      */
-
     public void setPlayerName(Scanner scanner) {
-        System.out.print("Enter your name: ");
+        System.out.print("Enter your name: \n");
         String playerName = scanner.nextLine().trim();
 
         Account newAccount = new Account(10000, playerName);
-        this.setAccount(newAccount);
-        System.out.println("Great. Let's get you to the top " + this.getAccount().getName() + "!");
-
+        this.account = newAccount;
     }
 
     public void inbetweenFirstScenario() {
@@ -123,7 +126,7 @@ public class GameFunctions {
         System.out.println("Each quarter, you'll face different scenarios that will test your investment skills.");
         System.out.println("Make choices wisely, as they will affect your balance and the outcome of the game.");
         System.out.println("Remember, you can go bankrupt if your balance drops to .00 or below.");
-        System.out.println("Good luck, " + account.getName() + "! Let's get started!");
+        System.out.println("Good luck, " + account.getName() + "! Let's get started! (Hit enter)");
     }
 
     /**
@@ -132,8 +135,17 @@ public class GameFunctions {
      */
     public void startGame(Scanner scanner) {
         while (true) {
+            // Flush any leftover newlines in the buffer before taking input
+            if (scanner.hasNextLine()) {
+                scanner.nextLine(); // Discards the leftover newline if there was any
+            }
+    
             System.out.println("Ready to begin? (yes/no)");
-            String response = scanner.nextLine().toLowerCase();
+            String response = scanner.nextLine().trim().toLowerCase(); // Capture input properly
+            
+            // Debugging to see what the input looks like
+            System.out.println("User input: " + response);
+    
             if (response.equals("yes")) {
                 System.out.println("Great! Let's get you started...");
                 break;
@@ -209,31 +221,35 @@ public class GameFunctions {
         System.out.println("[Quarter " + currentQuarter + " Scenario]");
         switch (currentQuarter) {
             case 1 -> {
-                ScenarioOne scenarioOne = new ScenarioOne(this);
+                ScenarioOne scenarioOne = new ScenarioOne(this, scanner);
                 scenarioOne.startScenarioOne();
             }
             case 2 -> {
-                ScenarioTwo scenarioTwo = new ScenarioTwo(this);
+                ScenarioTwo scenarioTwo = new ScenarioTwo(this, scanner);
                 scenarioTwo.startScenarioTwo();
             }
             case 3 -> {
-                ScenarioThree scenarioThree = new ScenarioThree(this);
+                ScenarioThree scenarioThree = new ScenarioThree(this, scanner);
                 scenarioThree.startScenarioThree();
             }
             case 4 -> {
-                ScenarioFour scenarioFour = new ScenarioFour(this);
+                ScenarioFour scenarioFour = new ScenarioFour(this, scanner);
                 scenarioFour.startScenarioFour();
             }
         }
     
         // === Monthly loop ===
-        for (int month = 1; month <= 4; month++) {
+        for (int month = 1; month < 4; month++) {
             System.out.println("\nMonth " + month + " of Quarter " + currentQuarter);
-            System.out.println("You can buy shares, hire employees, or manage your portfolio.");
-            System.out.print("Enter your choice, invalid input will skip: (buy/hire/skip): ");
-    
+            System.out.println("You can buy shares, hire employees, or manage your portfolio.(Enter)");
+
+            if (scanner.hasNextLine()) {
+                scanner.nextLine(); // Flush the buffer BEFORE asking the first month input
+            }
+            System.out.print("Enter your choice, invalid input will skip: (buy/hire/skip/stats): ");
             String choice = scanner.nextLine().trim().toLowerCase();
-    
+            
+            
             // === TICK: Update all stock values ===
             System.out.println("\n[ Stock market update... ]");
             for (Stock stock : market) {
@@ -249,35 +265,42 @@ public class GameFunctions {
                 stock.setValue(newValue);
                 stock.setChangeInValue(stock.calculateChangeInValue(oldValue, newValue));
             }
+            // === Display updated market ===
+            displayMarket(market);
     
-        switch (choice) {
-            case "buy":
-                buyShares(portfolio, market, account, scanner);
-                break;
-            case "hire":
-                System.out.print("How many employees do you want to hire? ");
-                try {
-                    int count = Integer.parseInt(scanner.nextLine());
-                    double cost = employees.hireEmployees(count);
-                    if (account.getBalance() >= cost) {
-                        account.updateBalance(cost);
-                        System.out.println("Hired " + count + " employees for $" + cost);
-                    } else {
-                        System.out.println("Not enough funds to hire that many employees.");
+            // Process input based on the user's choice
+            switch (choice) {
+                case "buy":
+                    buyShares(portfolio, market, account, scanner);
+                    break;
+                case "hire":
+                    System.out.print("How many employees do you want to hire?($50/each)");
+                    try {
+                        int count = Integer.parseInt(scanner.nextLine().trim());
+                        double cost = employees.hireEmployees(count);
+                        if (account.getBalance() >= cost) {
+                            account.updateBalance(cost);
+                            System.out.println("Hired " + count + " employees for $" + cost);
+                        } else {
+                            System.out.println("Not enough funds to hire that many employees.");
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Invalid number format. Skipping.");
                     }
-                } catch (NumberFormatException e) {
-                    System.out.println("Invalid number format. Skipping.");
-                }
-                break;
-            case "skip":
-                System.out.println("Skipping this month...");
-                break;
-            default:
-                System.out.println("Invalid choice. Skipping this month...");
-                break;
+                    break;
+                case "stats":
+                    displayStats();
+                    break;
+                case "skip":
+                    System.out.println("Skipping this month...");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Skipping this month...");
+                    break;
             }
         }
     }
+    
     
     public void displayMarket(List<Stock> market) {
         System.out.println("\n=== Market Overview ===");
@@ -308,28 +331,31 @@ public class GameFunctions {
         market.add(new Stock("Pear", 4));
         market.add(new Stock("Unusual Oil", 7));
     
-        GameFunctions newGame = new GameFunctions(account, employees, portfolio);
-    
-        StatsListener statsListener = new StatsListener(newGame);
+        GameFunctions newGame = new GameFunctions();
+        /** 
+        StatsListener statsListener = new StatsListener(newGame, scanner);
         statsListener.setDaemon(true);
         statsListener.start();
-    
+        */
         newGame.gameIntro(scanner);
         newGame.inbetweenFirstScenario();
         newGame.startGame(scanner);
     
-    
+        newGame.increaseQuarter();
+        newGame.increaseQuarter();
+        newGame.increaseQuarter();
+
         while (!newGame.isGameOver()) {
-            newGame.runMonthlyActivities(market, employees, account, portfolio, scanner);
-            account.updateBalance(employees.setTotalProduction());
+            newGame.runMonthlyActivities(market, employees, newGame.account, portfolio, scanner);
+            newGame.account.updateBalance(employees.setTotalProduction());
             
             newGame.increaseQuarter();
         }
     
-        if (account.getBalance() <= 0) {
+        if (newGame.account.getBalance() <= 0) {
             System.out.println("You went bankrupt!");
         } else {
-            System.out.println("Congrats! Final Balance: $" + account.getBalance());
+            System.out.println("Congrats! Final Balance: $" + newGame.account.getBalance());
         }
     
         scanner.close(); // Always close it at the end

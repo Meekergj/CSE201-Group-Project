@@ -10,8 +10,10 @@ public class ScenarioOne {
     private Account account;
     private List<Stock> stockPortfolio;
     private Employees employees;
+    private Scanner scanner;
 
-    public ScenarioOne(GameFunctions gameFunction) {
+    public ScenarioOne(GameFunctions gameFunction, Scanner scanner) {
+        this.scanner = scanner;
         this.gameFunction = gameFunction;
         this.employees = gameFunction.getEmployees();
         this.account = gameFunction.getAccount();
@@ -19,11 +21,10 @@ public class ScenarioOne {
     }
     
     public void startScenarioOne() {
-        Scanner in = new Scanner(System.in);
-        System.out.println("Welcome! \n It is the first quarter of the year, and you have a choice to make!" + 
-                           "Would you prefer a safe investment or a risky investment?" + 
+        System.out.println("Welcome! \n It is the first quarter of the year, and you have a choice to make! \n" + 
+                           "Would you prefer a safe investment or a risky investment? \n" + 
                            "Type 1 for safe, or 2 for risky.");
-        String playersChoice = in.next();
+        String playersChoice = scanner.next();
         int playersChoiceInt = -1;
 
         while (playersChoiceInt != 1 && playersChoiceInt != 2) {
@@ -79,7 +80,6 @@ public class ScenarioOne {
                 }
             }
         }
-        in.close();
     }
     
 
